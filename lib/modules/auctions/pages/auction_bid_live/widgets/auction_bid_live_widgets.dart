@@ -320,8 +320,8 @@ Widget _bidButton(
     VoidCallback? onTapBid,
     VoidCallback? onTapPlus,
     VoidCallback? onTapMinus}) {
-  final _auctionBidLiveController = Get.find<AuctionBidLiveController>();
-  final isDecrementEnabled = _auctionBidLiveController.isDecrementEnabled;
+  final auctionBidLiveController = Get.find<AuctionBidLiveController>();
+  final isDecrementEnabled = auctionBidLiveController.isDecrementEnabled;
 
   return Container(
     alignment: Alignment.center,

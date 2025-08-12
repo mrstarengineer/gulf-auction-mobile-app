@@ -320,9 +320,11 @@ class AuctionBidLiveController extends GetxController {
       _auctionView.value.vehicleDetail?.reserveAmount = eventData.reserveAmount;
     }
 
-    _storedBidAmount.value =
-        eventData.bidDetail?.amount ?? _storedBidAmount.value;
-    _currentUserId.value = eventData.bidDetail?.userId ?? _currentUserId.value;
+    if (eventData.bidDetail?.amount != null) {
+      _storedBidAmount.value = eventData.bidDetail?.amount;
+    }
+
+    _currentUserId.value = eventData.bidDetail?.userId ?? 0;
 
     if (eventData.bidInfo != null) {
       _auctionView.value.bidInfo = eventData.bidInfo;
