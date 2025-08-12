@@ -58,6 +58,7 @@ class AuctionBidLiveWidgets {
     dynamic upcomingVehicles,
     Color? bidBgColor,
     String? auctionMessage,
+    String? soldOutMessage,
     String? participants,
     String? carName,
     String? vin,
@@ -130,6 +131,7 @@ class AuctionBidLiveWidgets {
                       _bidButton(
                         eligibleForBidding: eligibleForBidding,
                         auctionMessage: auctionMessage,
+                        soldOutMessage: soldOutMessage,
                         currentBidAmount: currentBidAmount,
                         nextBidAmount: nextBidAmount ?? 0,
                         onTapPlus: onTapBidIncrement,
@@ -315,6 +317,7 @@ Widget _bidButton(
     bool isBidBtnEnabled = true,
     Color? bidBgColor,
     String? auctionMessage,
+    String? soldOutMessage,
     String? currentBidAmount,
     required int nextBidAmount,
     VoidCallback? onTapBid,
@@ -323,6 +326,34 @@ Widget _bidButton(
   final auctionBidLiveController = Get.find<AuctionBidLiveController>();
   final isDecrementEnabled = auctionBidLiveController.isDecrementEnabled;
 
+  if (soldOutMessage != null && soldOutMessage.isNotEmpty) {
+    return Container(
+      alignment: Alignment.center,
+      width: double.maxFinite,
+      padding: EdgeInsets.all(Dimensions.getHeight(12)),
+      decoration: BoxDecoration(
+          color: bidBgColor,
+          borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
+      child: Column(
+        children: [
+          AppTexts.extraSmallText(
+              text: 'CONGRATULATIONS',
+              color: Colors.green,
+              fontWeight: FontWeight.bold),
+          SizedBox(
+            height: Dimensions.getHeight(12),
+          ),
+          AppTexts.mediumText(
+            text: soldOutMessage,
+            color: AppColors.primaryColor,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.visible,
+            fontWeight: FontWeight.bold,
+          )
+        ],
+      ),
+    );
+  }
   return Container(
     alignment: Alignment.center,
     width: double.maxFinite,

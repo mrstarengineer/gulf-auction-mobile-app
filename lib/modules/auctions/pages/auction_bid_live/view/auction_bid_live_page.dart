@@ -128,6 +128,7 @@ class _AuctionBidLivePageState extends State<AuctionBidLivePage> {
                         ?.values,
                     bidBgColor: _auctionBidLiveController.mColor,
                     auctionMessage: _auctionBidLiveController.auctionMessage,
+                        soldOutMessage: _auctionBidLiveController.soldOutMessage,
                     participants: _pusherController.pusherEvent.totalParticipants,
                     carName:
                     '${_auctionBidLiveController.auctionView.vehicleDetail?.year ?? ''} ${_auctionBidLiveController.auctionView.vehicleDetail?.make ?? ''} ${_auctionBidLiveController.auctionView.vehicleDetail?.model ?? ''}',

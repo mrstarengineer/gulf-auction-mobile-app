@@ -31,6 +31,7 @@ class AuctionBidLiveController extends GetxController {
   final _storedBidAmount = 0.obs;
   final _bidButtonEnable = true.obs;
   final _auctionMessage = ''.obs;
+  final _soldOutMessage = ''.obs;
   final _mColor = AppColors.bidStartCLR.obs;
   final _mRadiusColor = AppColors.white.obs;
   var isBid = false;
@@ -54,6 +55,8 @@ class AuctionBidLiveController extends GetxController {
   bool get bidButtonEnable => _bidButtonEnable.value;
 
   String get auctionMessage => _auctionMessage.value;
+
+  String get soldOutMessage => _soldOutMessage.value;
 
   Color get mColor => _mColor.value;
 
@@ -347,6 +350,8 @@ class AuctionBidLiveController extends GetxController {
       _auctionView.value.bidInfo = eventData.bidInfo;
     }
 
+    _soldOutMessage.value = '';
+
     switch (eventData.event) {
       case 'READY_TO_BID':
         if (eventData.bidInfo != null) {
@@ -380,6 +385,13 @@ class AuctionBidLiveController extends GetxController {
         _updateAuctionStatus(
             isGolden: auctionView.vehicleDetail?.isGolden,
             isReserveChange: true);
+        break;
+
+      case 'BID_ENDED':
+        if (eventData.msg == 'Sold') {
+          _soldOutMessage.value = 'SOLD OUT';
+        }
+
         break;
 
       default:
