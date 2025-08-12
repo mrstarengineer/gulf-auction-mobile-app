@@ -17,11 +17,4 @@ class PusherRepository {
     });
   }
 
-  Future<http.Response> newBidAPIRepo (
-      {required int id, dynamic itemNumber, dynamic amount}) async{
-    return await _apiClient.postRequest(ApiEndpoints.newBid(id: id), body: {
-      'item_number': itemNumber,
-      'amount': amount,
-    });
-  }
 }

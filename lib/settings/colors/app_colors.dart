@@ -31,8 +31,8 @@ class AppColors {
   // Font
   static Color baseFontColor = Colors.black;
   static Color lightFontColor = HexColor.fromHex('#383C40');
-  static Color extraLightFontColor =  HexColor.fromHex('#A4A9AF');
-  static Color redFontColor =  HexColor.fromHex('#b11e24');
+  static Color extraLightFontColor = HexColor.fromHex('#A4A9AF');
+  static Color redFontColor = HexColor.fromHex('#b11e24');
 
   //   Divider
   static Color dividerColor = HexColor.fromHex('#F4F3F3');
@@ -43,7 +43,8 @@ class AppColors {
 
   //   BID
 
-  static  Color bidStartCLR = AppColors.primaryColor.withOpacity(0.2);
+  static Color bidStartCLR = AppColors.primaryColor.withOpacity(0.2);
   static Color myBidCLR = Colors.green.withOpacity(0.2);
+  static Color enabledCLR = Colors.green;
   static Color outbidCLR = Colors.yellow.withOpacity(0.2);
 }

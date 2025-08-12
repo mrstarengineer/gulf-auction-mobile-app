@@ -2,12 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get.dart';
 import 'package:gulf_car_auction/global/global.dart';
-import 'package:gulf_car_auction/models/auction/auction.dart';
 import 'package:gulf_car_auction/models/models.dart' as model;
 import 'package:gulf_car_auction/settings/settings.dart';
 import 'package:gulf_car_auction/utils/skeleton/app_skeletons.dart';
 import 'package:gulf_car_auction/utils/utils.dart';
+import 'package:gulf_car_auction/modules/auctions/pages/auction_bid_live/auction_bid.dart';
 
 class AuctionBidLiveWidgets {
   AuctionBidLiveWidgets._();
@@ -47,17 +48,17 @@ class AuctionBidLiveWidgets {
   }
 
   static Widget body({
-    bool isBidInfoShow = false,
     bool eligibleForBidding = false,
     bool isBidBtnEnabled = true,
     VoidCallback? onTapBid,
     VoidCallback? onTapBidIncrement,
     VoidCallback? onTapBidDecrement,
     String? currentBidAmount,
-    int? minimumBidAmount,
     int? nextBidAmount,
-    String? participants,
+    dynamic upcomingVehicles,
+    Color? bidBgColor,
     String? auctionMessage,
+    String? participants,
     String? carName,
     String? vin,
     String? sequence,
@@ -68,10 +69,6 @@ class AuctionBidLiveWidgets {
     String? primaryDamage,
     String? engineType,
     String? documentType,
-    // String? secondaryDamage,
-    // String? cylinder,
-    Color? bidBgColor,
-    required dynamic upcomingVehicle,
   }) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -94,8 +91,6 @@ class AuctionBidLiveWidgets {
                     primaryDamage: primaryDamage,
                     engineType: engineType,
                     documentType: documentType,
-                    // secondaryDamage: secondaryDamage,
-                    // cylinder: cylinder,
                   ),
                 ),
                 SizedBox(
@@ -134,22 +129,13 @@ class AuctionBidLiveWidgets {
                       ),
                       _bidButton(
                         eligibleForBidding: eligibleForBidding,
-                        isBidInfoShow: isBidInfoShow,
                         auctionMessage: auctionMessage,
-                        minimumBidAmount: '${minimumBidAmount ?? 0}',
                         currentBidAmount: currentBidAmount,
                         nextBidAmount: nextBidAmount ?? 0,
                         onTapPlus: onTapBidIncrement,
                         onTapMinus: onTapBidDecrement,
                         bidBgColor: bidBgColor,
-                        onTapBid: () {
-                          if (isBidBtnEnabled) {
-                            onTapBid?.call();
-                          } else {
-                            AppToasts.shortToast(
-                                'Processing your bid, wait a moment!');
-                          }
-                        },
+                        onTapBid: onTapBid,
                         isBidBtnEnabled: isBidBtnEnabled,
                       ),
                     ],
@@ -161,11 +147,11 @@ class AuctionBidLiveWidgets {
               height: Dimensions.getHeight(12),
             ),
             AppTexts.smallText(
-                text: 'Upcoming Lots (${upcomingVehicle?.length ?? 0})'),
+                text: 'Upcoming Lots (${upcomingVehicles?.length ?? 0})'),
             SizedBox(
               height: Dimensions.getHeight(6),
             ),
-            _upcomingVehicles(upcomingVehicle: upcomingVehicle),
+            _upcomingVehicles(upcomingVehicles: upcomingVehicles),
             SizedBox(
               height: Dimensions.getHeight(12),
             ),
@@ -176,12 +162,15 @@ class AuctionBidLiveWidgets {
   }
 }
 
-Widget _upcomingVehicles({required dynamic upcomingVehicle}) {
+Widget _upcomingVehicles({required dynamic upcomingVehicles}) {
+  if (upcomingVehicles == null || upcomingVehicles.isEmpty) {
+    return const SizedBox.shrink();
+  }
   return Wrap(
     spacing: Dimensions.getWidth(10),
-    runSpacing: Dimensions.getHeight(10), // Vertical spacing between rows
-    children: List.generate(upcomingVehicle?.length ?? 0, (index) {
-      VehicleDetail record = upcomingVehicle.elementAt(index);
+    runSpacing: Dimensions.getHeight(10),
+    children: List.generate(upcomingVehicles.length, (index) {
+      model.KVehicleDetail record = upcomingVehicles.elementAt(index);
       return AnimationConfiguration.staggeredList(
         position: index,
         duration: const Duration(milliseconds: 375),
@@ -190,7 +179,6 @@ Widget _upcomingVehicles({required dynamic upcomingVehicle}) {
           child: FadeInAnimation(
             child: Container(
               width: double.maxFinite,
-              // Half width of screen with margin adjustment
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius:
@@ -301,8 +289,6 @@ Widget _topAuctionVehicleCarPreview({
           ),
         ),
       ),
-
-      // TAG
       tag == null || tag.isEmpty
           ? const SizedBox.shrink()
           : Positioned(
@@ -329,13 +315,15 @@ Widget _bidButton(
     bool eligibleForBidding = false,
     bool isBidBtnEnabled = true,
     Color? bidBgColor,
-    String? minimumBidAmount,
     String? auctionMessage,
     String? currentBidAmount,
     required int nextBidAmount,
     VoidCallback? onTapBid,
     VoidCallback? onTapPlus,
     VoidCallback? onTapMinus}) {
+  final _auctionBidLiveController = Get.find<AuctionBidLiveController>();
+  final isDecrementEnabled = _auctionBidLiveController.isDecrementEnabled;
+
   return Container(
     alignment: Alignment.center,
     width: double.maxFinite,
@@ -356,9 +344,7 @@ Widget _bidButton(
               width: 4,
             ),
             AppTexts.largeText(
-                text: (!isBidInfoShow || currentBidAmount == '0')
-                    ? '${nextBidAmount ?? '0'}'
-                    : currentBidAmount ?? '0',
+                text: currentBidAmount ?? '0',
                 color: AppColors.baseFontColor,
                 fontWeight: FontWeight.bold),
           ],
@@ -372,20 +358,11 @@ Widget _bidButton(
               text: auctionMessage,
               color: AppColors.primaryColor,
               fontWeight: FontWeight.bold),
-        // SizedBox(
-        //   height: Dimensions.getHeight(8),
-        // ),
-        // AppTexts.extraSmallText(
-        //     text: 'All Bid is in AED', color: AppColors.primaryColor),
         SizedBox(
           height: Dimensions.getHeight(12),
         ),
-
-        // BID
-        (() {
-          if (eligibleForBidding) {
-            if (isBidInfoShow) {
-              return Column(
+        eligibleForBidding
+            ? Column(
                 children: [
                   Row(
                     children: [
@@ -395,7 +372,7 @@ Widget _bidButton(
                               onTap: onTapPlus,
                               text: '+',
                               padding: Dimensions.getHeight(4),
-                              bgColor: AppColors.baseColor.withOpacity(0.5),
+                              bgColor: AppColors.enabledCLR,
                               textColor: AppColors.white)),
                       SizedBox(
                         width: Dimensions.getWidth(12),
@@ -411,7 +388,7 @@ Widget _bidButton(
                               borderRadius: BorderRadius.circular(
                                   Dimensions.getHeight(4))),
                           child: AppTexts.smallText(
-                              text: '$nextBidAmount',
+                              text: nextBidAmount.toString(),
                               color: AppColors.baseFontColor),
                         ),
                       ),
@@ -421,18 +398,23 @@ Widget _bidButton(
                       Expanded(
                           flex: 1,
                           child: AppButtons.btnWithBg(
-                              onTap: onTapMinus,
-                              text: '-',
-                              padding: Dimensions.getHeight(4),
-                              bgColor: AppColors.baseColor.withOpacity(0.5),
-                              textColor: AppColors.white))
+                            onTap: isDecrementEnabled ? onTapMinus : null,
+                            text: '-',
+                            padding: Dimensions.getHeight(4),
+                            bgColor: isDecrementEnabled
+                                ? AppColors.enabledCLR
+                                : AppColors.lightGrey,
+                            textColor: isDecrementEnabled
+                                ? AppColors.white
+                                : AppColors.black,
+                          )),
                     ],
                   ),
                   SizedBox(
                     height: Dimensions.getHeight(12),
                   ),
                   AppButtons.btnWithBg(
-                    onTap: onTapBid,
+                    onTap: isBidBtnEnabled ? onTapBid : null,
                     text: 'BID',
                     bgColor: isBidBtnEnabled
                         ? AppColors.primaryColor
@@ -442,20 +424,14 @@ Widget _bidButton(
                         : AppColors.baseFontColor,
                   )
                 ],
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          } else {
-            return AppTexts.smallText(
-              text: 'You are not eligible for bidding!',
-              color: AppColors.primaryColor,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.visible,
-              fontWeight: FontWeight.bold,
-            );
-          }
-        }())
+              )
+            : AppTexts.smallText(
+                text: 'You are not eligible for bidding!',
+                color: AppColors.primaryColor,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.visible,
+                fontWeight: FontWeight.bold,
+              )
       ],
     ),
   );
@@ -471,8 +447,6 @@ Widget _bidInfoBody({
   String? primaryDamage,
   String? engineType,
   String? documentType,
-  // String? secondaryDamage,
-  // String? cylinder,
 }) {
   return Column(
     children: [
@@ -485,8 +459,6 @@ Widget _bidInfoBody({
       _infoField(title: 'PRIMARY DAMAGE', value: primaryDamage),
       _infoField(title: 'ENGINE TYPE', value: engineType),
       _infoField(title: 'DOCUMENT TYPE', value: documentType),
-      // _infoField(title: 'SECONDARY DAMAGE', value: secondaryDamage),
-      // _infoField(title: 'CYLINDER', value: cylinder),
     ],
   );
 }
