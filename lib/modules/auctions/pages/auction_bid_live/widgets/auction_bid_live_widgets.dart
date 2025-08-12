@@ -146,8 +146,8 @@ class AuctionBidLiveWidgets {
             SizedBox(
               height: Dimensions.getHeight(12),
             ),
-            AppTexts.smallText(
-                text: 'Upcoming Lots (${upcomingVehicles?.length ?? 0})'),
+            if (upcomingVehicles != null || upcomingVehicles.isNotEmpty)
+              AppTexts.smallText(text: 'Upcoming Lots'),
             SizedBox(
               height: Dimensions.getHeight(6),
             ),
@@ -311,8 +311,7 @@ Widget _topAuctionVehicleCarPreview({
 }
 
 Widget _bidButton(
-    {bool isBidInfoShow = false,
-    bool eligibleForBidding = false,
+    {bool eligibleForBidding = false,
     bool isBidBtnEnabled = true,
     Color? bidBgColor,
     String? auctionMessage,
@@ -356,7 +355,9 @@ Widget _bidButton(
         if (auctionMessage != null && auctionMessage.isNotEmpty)
           AppTexts.extraSmallText(
               text: auctionMessage,
-              color: AppColors.primaryColor,
+              color: auctionMessage == 'YOU ARE WINNING'
+                  ? Colors.green
+                  : AppColors.primaryColor,
               fontWeight: FontWeight.bold),
         SizedBox(
           height: Dimensions.getHeight(12),
@@ -369,11 +370,16 @@ Widget _bidButton(
                       Expanded(
                           flex: 1,
                           child: AppButtons.btnWithBg(
-                              onTap: onTapPlus,
-                              text: '+',
-                              padding: Dimensions.getHeight(4),
-                              bgColor: AppColors.enabledCLR,
-                              textColor: AppColors.white)),
+                            onTap: isDecrementEnabled ? onTapMinus : null,
+                            text: '-',
+                            padding: Dimensions.getHeight(4),
+                            bgColor: isDecrementEnabled
+                                ? AppColors.enabledCLR
+                                : AppColors.lightGrey,
+                            textColor: isDecrementEnabled
+                                ? AppColors.white
+                                : AppColors.black,
+                          )),
                       SizedBox(
                         width: Dimensions.getWidth(12),
                       ),
@@ -398,27 +404,26 @@ Widget _bidButton(
                       Expanded(
                           flex: 1,
                           child: AppButtons.btnWithBg(
-                            onTap: isDecrementEnabled ? onTapMinus : null,
-                            text: '-',
-                            padding: Dimensions.getHeight(4),
-                            bgColor: isDecrementEnabled
-                                ? AppColors.enabledCLR
-                                : AppColors.lightGrey,
-                            textColor: isDecrementEnabled
-                                ? AppColors.white
-                                : AppColors.black,
-                          )),
+                              onTap: onTapPlus,
+                              text: '+',
+                              padding: Dimensions.getHeight(4),
+                              bgColor: AppColors.enabledCLR,
+                              textColor: AppColors.white)),
                     ],
                   ),
                   SizedBox(
                     height: Dimensions.getHeight(12),
                   ),
                   AppButtons.btnWithBg(
-                    onTap: isBidBtnEnabled ? onTapBid : null,
+                    onTap:
+                        auctionMessage != 'YOU ARE WINNING' && isBidBtnEnabled
+                            ? onTapBid
+                            : null,
                     text: 'BID',
-                    bgColor: isBidBtnEnabled
-                        ? AppColors.primaryColor
-                        : AppColors.baseColor.withOpacity(0.5),
+                    bgColor:
+                        auctionMessage != 'YOU ARE WINNING' && isBidBtnEnabled
+                            ? AppColors.primaryColor
+                            : AppColors.baseColor.withOpacity(0.5),
                     textColor: isBidBtnEnabled
                         ? AppColors.white
                         : AppColors.baseFontColor,

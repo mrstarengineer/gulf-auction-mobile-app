@@ -124,7 +124,13 @@ class AuctionBidLiveController extends GetxController {
 
             // Set initial myBidAmount if available
             if (auctionView.bidInfo != null) {
-              myBidAmount = auctionView.bidInfo!.nextBidAmount ?? 0;
+              if (auctionView.bidInfo!.nextBidAmount ==
+                  auctionView.vehicleDetail?.startBidAmount) {
+                myBidAmount = (auctionView.bidInfo!.nextBidAmount ?? 0) +
+                    (auctionView.bidInfo!.bidIncrement ?? 0);
+              } else {
+                myBidAmount = auctionView.bidInfo!.nextBidAmount ?? 0;
+              }
             }
 
             // Start countdown timer
@@ -159,7 +165,8 @@ class AuctionBidLiveController extends GetxController {
         var responseBody = json.decode(response.body);
         if (responseBody is Map<String, dynamic> && responseBody.isNotEmpty) {
           _auctionView.value.upcomingVehicles =
-              KUpcomingVehicles.fromJson(responseBody);
+              KUpcomingVehicles.fromJson(responseBody['data']);
+          update();
         }
         return ApiResponseModel(isSuccess: true, message: '');
       });
@@ -255,7 +262,6 @@ class AuctionBidLiveController extends GetxController {
 
         // Update new vehicle details
         _reserveAmount.value = nextVehicle.reserveAmount ?? 0;
-        _storedBidAmount.value = nextVehicle.currentBidAmount ?? 0;
 
         _updateAuctionStatus(isGolden: nextVehicle.isGolden);
       }
@@ -265,7 +271,10 @@ class AuctionBidLiveController extends GetxController {
   }
 
   // Centralized Bid Status Logic
-  void _updateAuctionStatus({int? isGolden}) {
+  void _updateAuctionStatus(
+      {int? isGolden,
+      bool isReserveChange = false,
+      bool isClosedVehicle = false}) {
     final myId = _preferenceController.getInt(PrefsKeys.userId);
 
     // Default status
@@ -274,18 +283,31 @@ class AuctionBidLiveController extends GetxController {
     mRadiusColor = AppColors.white;
 
     if (isGolden == 1) {
-      mColor = AppColors.outbidCLR;
+      if (isClosedVehicle) {
+        auctionView.vehicleDetail?.isGolden = 1;
+      }
+
       _auctionMessage.value = 'NEAR TO RESERVE';
     } else if (isGolden == 2 ||
         (_reserveAmount.value > 0 &&
             _storedBidAmount.value >= _reserveAmount.value)) {
+      if (isGolden == 2) {
+        if (isClosedVehicle) {
+          auctionView.vehicleDetail?.isGolden = 2;
+        }
+        if (isReserveChange) {
+          _auctionMessage.value = 'VEHICLE ON GREEN LIGHT';
+          return;
+        }
+      }
       if (_currentUserId.value == myId) {
         mColor = AppColors.myBidCLR;
         _auctionMessage.value = 'YOU ARE WINNING';
       } else {
-        mColor = AppColors.bidStartCLR;
         _auctionMessage.value = 'VEHICLE ON GREEN LIGHT';
       }
+    } else {
+      auctionView.vehicleDetail?.isGolden = 0;
     }
   }
 
@@ -295,6 +317,7 @@ class AuctionBidLiveController extends GetxController {
     // General Pusher event data updates
     if (eventData.reserveAmount != null) {
       _reserveAmount.value = eventData.reserveAmount!;
+      _auctionView.value.vehicleDetail?.reserveAmount = eventData.reserveAmount;
     }
 
     _storedBidAmount.value =
@@ -314,22 +337,25 @@ class AuctionBidLiveController extends GetxController {
             eventData.currentItem != auctionView.vehicleDetail?.itemNumberStr) {
           nextItemLoad(currentItem: eventData.currentItem!);
         }
-        _updateAuctionStatus(isGolden: eventData.isGolden);
+        _updateAuctionStatus(isGolden: auctionView.vehicleDetail?.isGolden);
         break;
 
       case 'NEW_BID':
         if (eventData.bidInfo != null) {
           _myBidAmount.value = eventData.bidInfo!.nextBidAmount ?? myBidAmount;
         }
-        _updateAuctionStatus(isGolden: eventData.isGolden);
+        _updateAuctionStatus(isGolden: auctionView.vehicleDetail?.isGolden);
         break;
 
       case 'CLOSER_VEHICLE':
-        _updateAuctionStatus(isGolden: eventData.isGolden);
+        _updateAuctionStatus(
+            isGolden: eventData.isGolden, isClosedVehicle: true);
         break;
 
       case 'CHANGE_RESERVE':
-        _updateAuctionStatus(isGolden: eventData.isGolden);
+        _updateAuctionStatus(
+            isGolden: auctionView.vehicleDetail?.isGolden,
+            isReserveChange: true);
         break;
 
       default:

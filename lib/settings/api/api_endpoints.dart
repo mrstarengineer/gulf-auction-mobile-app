@@ -44,7 +44,7 @@ class ApiEndpoints {
   static String auctionDashboard = '/auction-dashboard';
 
   static String upcomingVehicles({int? auctionId}) =>
-      '/${auctionId ?? ''}/upcoming-vehicles';
+      '/auctions/${auctionId ?? ''}/upcoming-vehicles';
 
   static String joinAuction({int? id}) => '/auctions/${id ?? ''}/join';
 
