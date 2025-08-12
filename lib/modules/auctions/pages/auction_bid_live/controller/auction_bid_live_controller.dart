@@ -264,6 +264,8 @@ class AuctionBidLiveController extends GetxController {
 
         // Update new vehicle details
         _reserveAmount.value = nextVehicle.reserveAmount ?? 0;
+        _storedBidAmount.value = nextVehicle.startBidAmount ?? 0;
+        _currentUserId.value = 0;
 
         _updateAuctionStatus(isGolden: nextVehicle.isGolden);
       }
@@ -337,9 +339,10 @@ class AuctionBidLiveController extends GetxController {
         if (eventData.bidInfo != null) {
           _myBidAmount.value = eventData.bidInfo!.nextBidAmount ?? 0;
         }
-        if (eventData.currentItem != null &&
-            eventData.currentItem != auctionView.vehicleDetail?.itemNumberStr) {
-          nextItemLoad(currentItem: eventData.currentItem!);
+        if (eventData.bidInfo?.currentItem != null &&
+            eventData.bidInfo?.currentItem !=
+                auctionView.vehicleDetail?.itemNumberStr) {
+          nextItemLoad(currentItem: eventData.bidInfo!.currentItem!);
         }
         _updateAuctionStatus(isGolden: auctionView.vehicleDetail?.isGolden);
         break;
