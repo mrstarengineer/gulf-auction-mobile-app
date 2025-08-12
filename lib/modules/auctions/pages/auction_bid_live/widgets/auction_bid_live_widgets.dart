@@ -146,7 +146,7 @@ class AuctionBidLiveWidgets {
             SizedBox(
               height: Dimensions.getHeight(12),
             ),
-            if (upcomingVehicles != null || upcomingVehicles.isNotEmpty)
+            if (upcomingVehicles != null && upcomingVehicles.isNotEmpty)
               AppTexts.smallText(text: 'Upcoming Lots'),
             SizedBox(
               height: Dimensions.getHeight(6),

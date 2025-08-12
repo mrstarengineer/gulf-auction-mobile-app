@@ -146,7 +146,9 @@ class AuctionBidLiveController extends GetxController {
             // Start upcoming vehicles polling
             startUpcomingVehiclesPolling(auctionId!);
 
-            _updateAuctionStatus(isGolden: auctionView.vehicleDetail?.isGolden);
+            _updateAuctionStatus(
+                isGolden: auctionView.vehicleDetail?.isGolden,
+                isPureSale: auctionView.vehicleDetail?.saleType == 3);
           }
           return ApiResponseModel(isSuccess: true, message: '');
         },
@@ -267,7 +269,9 @@ class AuctionBidLiveController extends GetxController {
         _storedBidAmount.value = nextVehicle.startBidAmount ?? 0;
         _currentUserId.value = 0;
 
-        _updateAuctionStatus(isGolden: nextVehicle.isGolden);
+        _updateAuctionStatus(
+            isGolden: nextVehicle.isGolden,
+            isPureSale: nextVehicle.saleType == 3);
       }
     } catch (error) {
       log(error.toString());
@@ -277,6 +281,7 @@ class AuctionBidLiveController extends GetxController {
   // Centralized Bid Status Logic
   void _updateAuctionStatus(
       {int? isGolden,
+      bool isPureSale = false,
       bool isReserveChange = false,
       bool isClosedVehicle = false}) {
     final myId = _preferenceController.getInt(PrefsKeys.userId);
@@ -286,11 +291,19 @@ class AuctionBidLiveController extends GetxController {
     mColor = AppColors.bidStartCLR;
     mRadiusColor = AppColors.white;
 
+    if (isPureSale) {
+      _auctionMessage.value = 'VEHICLE ON GREEN LIGHT';
+      if (_currentUserId.value == myId) {
+        mColor = AppColors.myBidCLR;
+        _auctionMessage.value = 'YOU ARE WINNING';
+      }
+    }
+
     if (isGolden == 1) {
       if (isClosedVehicle) {
         auctionView.vehicleDetail?.isGolden = 1;
       }
-
+      mColor = AppColors.outbidCLR;
       _auctionMessage.value = 'NEAR TO RESERVE';
     } else if (isGolden == 2 ||
         (_reserveAmount.value > 0 &&
@@ -344,14 +357,18 @@ class AuctionBidLiveController extends GetxController {
                 auctionView.vehicleDetail?.itemNumberStr) {
           nextItemLoad(currentItem: eventData.bidInfo!.currentItem!);
         }
-        _updateAuctionStatus(isGolden: auctionView.vehicleDetail?.isGolden);
+        _updateAuctionStatus(
+            isGolden: auctionView.vehicleDetail?.isGolden,
+            isPureSale: auctionView.vehicleDetail?.saleType == 3);
         break;
 
       case 'NEW_BID':
         if (eventData.bidInfo != null) {
           _myBidAmount.value = eventData.bidInfo!.nextBidAmount ?? myBidAmount;
         }
-        _updateAuctionStatus(isGolden: auctionView.vehicleDetail?.isGolden);
+        _updateAuctionStatus(
+            isGolden: auctionView.vehicleDetail?.isGolden,
+            isPureSale: auctionView.vehicleDetail?.saleType == 3);
         break;
 
       case 'CLOSER_VEHICLE':

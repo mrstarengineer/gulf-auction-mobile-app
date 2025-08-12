@@ -84,6 +84,7 @@ class KVehicleDetail {
   String? vin;
   String? documentType;
   int? odometer;
+  int? saleType;
   String? odometerType;
   int? reserveAmount;
   dynamic retailValue;
@@ -116,6 +117,7 @@ class KVehicleDetail {
       });
     }
     year = json['year'];
+    saleType = json['sale_type'];
     isGolden = json['is_golden'];
     make = json['make'];
     documentType = json['document_type'];
