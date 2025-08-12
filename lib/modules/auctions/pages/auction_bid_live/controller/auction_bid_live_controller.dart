@@ -92,8 +92,10 @@ class AuctionBidLiveController extends GetxController {
   }
 
   bool get isDecrementEnabled {
-    // We now use the most recent minimumBidAmount from either the initial join or a pusher event
     final currentMinBid = auctionView.bidInfo?.minimumBidAmount ?? 0;
+    if (myBidAmount - currentMinBid == auctionView.bidInfo?.bidIncrement) {
+      return false;
+    }
     return myBidAmount > currentMinBid;
   }
 
