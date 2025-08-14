@@ -344,7 +344,12 @@ class AuctionBidLiveController extends GetxController {
       _storedBidAmount.value = eventData.bidDetail?.amount;
     }
 
-    _currentUserId.value = eventData.bidDetail?.userId ?? 0;
+    if (eventData.event == 'CLOSER_VEHICLE' || eventData.event == 'BID_ENDED') {
+      _currentUserId.value =
+          eventData.bidDetail?.userId ?? _currentUserId.value;
+    } else {
+      _currentUserId.value = eventData.bidDetail?.userId ?? 0;
+    }
 
     if (eventData.bidInfo != null) {
       _auctionView.value.bidInfo = eventData.bidInfo;
@@ -389,7 +394,16 @@ class AuctionBidLiveController extends GetxController {
 
       case 'BID_ENDED':
         if (eventData.msg == 'Sold') {
-          _soldOutMessage.value = 'SOLD OUT';
+          if (_preferenceController.getInt(PrefsKeys.userId) ==
+              eventData.winnerUserId) {
+            _soldOutMessage.value = 'CONGRATULATIONS\n  VEHICLE SOLD TO YOU';
+          } else {
+            _soldOutMessage.value = 'VEHICLE SOLD OUT';
+          }
+        } else if (eventData.msg == 'UnSold') {
+          _soldOutMessage.value = 'VEHICLE UNSOLD';
+        } else if (eventData.msg == 'Sold On Approval') {
+          _soldOutMessage.value = 'VEHICLE SOLD ON APPROVAL';
         }
 
         break;

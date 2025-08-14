@@ -327,32 +327,91 @@ Widget _bidButton(
   final isDecrementEnabled = auctionBidLiveController.isDecrementEnabled;
 
   if (soldOutMessage != null && soldOutMessage.isNotEmpty) {
-    return Container(
-      alignment: Alignment.center,
-      width: double.maxFinite,
-      padding: EdgeInsets.all(Dimensions.getHeight(12)),
-      decoration: BoxDecoration(
-          color: bidBgColor,
-          borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
-      child: Column(
-        children: [
-          AppTexts.extraSmallText(
-              text: 'CONGRATULATIONS',
+    if (soldOutMessage == 'VEHICLE UNSOLD') {
+      return Container(
+        alignment: Alignment.center,
+        width: double.maxFinite,
+        padding: EdgeInsets.all(Dimensions.getHeight(12)),
+        decoration: BoxDecoration(
+            color: bidBgColor,
+            borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
+        child: Column(
+          children: [
+            const Icon(
+              Icons.close,
+              color: Colors.red,
+              size: 40,
+            ),
+            SizedBox(
+              height: Dimensions.getHeight(12),
+            ),
+            AppTexts.smallText(
+              text: soldOutMessage,
+              color: AppColors.primaryColor,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              fontWeight: FontWeight.bold,
+            )
+          ],
+        ),
+      );
+    } else if (soldOutMessage == 'VEHICLE SOLD ON APPROVAL') {
+      return Container(
+        alignment: Alignment.center,
+        width: double.maxFinite,
+        padding: EdgeInsets.all(Dimensions.getHeight(12)),
+        decoration: BoxDecoration(
+            color: bidBgColor,
+            borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
+        child: Column(
+          children: [
+            const Icon(
+              Icons.face,
+              color: Colors.black,
+              size: 40,
+            ),
+            SizedBox(
+              height: Dimensions.getHeight(12),
+            ),
+            AppTexts.smallText(
+              text: soldOutMessage,
+              color: Colors.black,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              fontWeight: FontWeight.bold,
+            )
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        alignment: Alignment.center,
+        width: double.maxFinite,
+        padding: EdgeInsets.all(Dimensions.getHeight(12)),
+        decoration: BoxDecoration(
+            color: bidBgColor,
+            borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
+        child: Column(
+          children: [
+            const Icon(
+              Icons.check_circle,
               color: Colors.green,
-              fontWeight: FontWeight.bold),
-          SizedBox(
-            height: Dimensions.getHeight(12),
-          ),
-          AppTexts.mediumText(
-            text: soldOutMessage,
-            color: AppColors.primaryColor,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.visible,
-            fontWeight: FontWeight.bold,
-          )
-        ],
-      ),
-    );
+              size: 40,
+            ),
+            SizedBox(
+              height: Dimensions.getHeight(12),
+            ),
+            AppTexts.smallText(
+              text: soldOutMessage,
+              color: Colors.green,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              fontWeight: FontWeight.bold,
+            )
+          ],
+        ),
+      );
+    }
   }
   return Container(
     alignment: Alignment.center,
