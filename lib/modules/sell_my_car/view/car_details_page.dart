@@ -43,7 +43,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
     return Scaffold(
       appBar: AppBars.appBar(
           title: vehicleTitle == 'null' ? 'Vehicle Details' : vehicleTitle,
-          isEdit: true,
+          isEdit: _pageType == MSellMyCarOptions.pendingVehicle,
           onEditPressed: () {
             Get.toNamed(AppRoutes.addVehicle,
                 arguments: _sellMyCarController.singleVehicleInfo);
