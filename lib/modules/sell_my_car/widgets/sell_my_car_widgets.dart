@@ -256,7 +256,7 @@ Widget _auctionInfoBody({
   required Auction? auction,
 }) {
   if (auction == null) {
-    return const SizedBox.shrink();
+    return AppAlertMessages.emptyAlert();
   }
   return Column(
     children: [
@@ -446,7 +446,8 @@ Widget _infoField(
                           valueRight.isEmpty
                       ? 'N/A'
                       : valueRight,
-                  overflow: TextOverflow.visible),
+                  overflow: TextOverflow.visible,
+                  textAlign: TextAlign.end),
             ],
           ),
         ),
@@ -588,42 +589,23 @@ Widget _allVehiclesListView(
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _vehicleCarPreview(
                       thumbnailUrl: vehicleInfo.thumbnailUrl,
                     ),
                     SizedBox(
-                      width: Dimensions.getWidth(12),
+                      width: Dimensions.getWidth(4),
                     ),
                     Expanded(
                       child: _vehicleCarDetails(
                         displayTypes: displayTypes,
                         vehicleInfo: vehicleInfo,
+                        onTapDelete: onTapDelete,
+                        onTapEdit: onTapEdit,
+                        context: context,
                       ),
                     ),
-                    if (vehicleInfo.status == 0 || vehicleInfo.status == 50)
-                      Column(
-                        children: [
-                          AppButtons.iconButtonWithBg(
-                              onTap: () {
-                                onTapEdit?.call(vehicleInfo.id!);
-                              },
-                              icon: Icons.edit),
-                          SizedBox(
-                            height: Dimensions.getHeight(8),
-                          ),
-                          AppButtons.iconButtonWithBg(
-                              onTap: () {
-                                AppDialogs.deleteConfirmation(context,
-                                    onTapBtn2: () {
-                                  if (vehicleInfo.id != null) {
-                                    onTapDelete?.call(vehicleInfo.id!);
-                                  }
-                                });
-                              },
-                              icon: Icons.delete)
-                        ],
-                      )
                   ],
                 ),
               ),
@@ -648,8 +630,8 @@ Widget _vehicleCarPreview({
       CachedNetworkImage(
         imageUrl: thumbnailUrl ?? '',
         imageBuilder: (context, imageProvider) => Container(
-          width: Dimensions.getHeight(132),
-          height: Dimensions.getHeight(85),
+          width: Dimensions.getWidth(120),
+          height: Dimensions.getHeight(110),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.horizontal(
                 left: Radius.circular(Dimensions.getWidth(10))),
@@ -683,94 +665,382 @@ Widget _vehicleCarPreview({
 Widget _vehicleCarDetails({
   required MyAllCarsData vehicleInfo,
   required List<VehicleDetailType> displayTypes,
+  ValueChanged<int>? onTapDelete,
+  ValueChanged<int>? onTapEdit,
+  required BuildContext context,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: displayTypes.map((type) {
-      switch (type) {
-        case VehicleDetailType.vin:
-          return AppTexts.smallText(
-            text: 'Vin: ${vehicleInfo.vin ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.title:
-          return AppTexts.smallText(
-            text: 'Title: ${vehicleInfo.title ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.reservedPrice:
-          return AppTexts.smallText(
-            text: 'Reserved Price: ${vehicleInfo.reserveAmount ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      // 1. Title with red background
+      Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.horizontal(
+              right: Radius.circular(Dimensions.getWidth(10))),
+          color: AppColors.primaryColor,
+        ),
+        width: double.infinity,
+        padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
+        child: AppTexts.smallText(
+          text: vehicleInfo.title ?? 'N/A',
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
 
-        case VehicleDetailType.counterOffer:
-          return AppTexts.smallText(
-            text: 'Counter Offer: ${vehicleInfo.counterAmount ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
+      // VIN
+      if (displayTypes.contains(VehicleDetailType.vin))
+        AppTexts.smallText(
+          text: 'VIN: ${vehicleInfo.vin ?? 'N/A'}',
+          fontWeight: FontWeight.bold,
+        ),
 
-        case VehicleDetailType.docApproved:
-          return AppTexts.smallText(
-            text:
-                'Document Status: ${vehicleInfo.docApproved == 0 ? 'Not Approved' : 'Approved'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.docReceived:
-          return AppTexts.smallText(
-            text:
-                'Document Status: ${vehicleInfo.docReceived == 0 ? 'Not Received' : 'Received'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.runs:
-          return AppTexts.smallText(
-            text: 'RUNS: ${vehicleInfo.runs ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.price:
-          return AppTexts.smallText(
-            text: 'Price: ${vehicleInfo.reserveAmount ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.reservedAmount:
-          return AppTexts.smallText(
-            text: 'Reserve Amount: ${vehicleInfo.reserveAmount ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.auction:
-          return AppTexts.smallText(
-            text: 'Auction: ${vehicleInfo.auctionName ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.sequence:
-          return AppTexts.smallText(
-            text: 'Sequence: ${vehicleInfo.serial ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.soldDate:
-          return AppTexts.smallText(
-            text: 'Sold Date: ${vehicleInfo.soldDate ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.soldPrice:
-          return AppTexts.smallText(
-            text: 'Sold Price: ${vehicleInfo.sellingPrice ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.maxBid:
-          return AppTexts.smallText(
-            text: 'Max Bid: ${vehicleInfo.sellingPrice ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-        case VehicleDetailType.statusName:
-          return AppTexts.smallText(
-            text: 'Status: ${vehicleInfo.statusName ?? 'N/A'}',
-            fontWeight: FontWeight.bold,
-          );
-      }
-    }).toList(),
+      // Reserved Price
+      if (displayTypes.contains(VehicleDetailType.reservedPrice))
+        Row(
+          children: [
+            AppTexts.smallText(
+              text: 'Reserved Price:',
+              fontWeight: FontWeight.bold,
+            ),
+            const SizedBox(width: 4),
+            AppTexts.smallText(
+              text: '${vehicleInfo.reserveAmount ?? 'N/A'}',
+              fontWeight: FontWeight.bold,
+              color: vehicleInfo.status! >= 25 ? Colors.green : Colors.red,
+            ),
+          ],
+        ),
+
+      // Counter Offer
+      if (displayTypes.contains(VehicleDetailType.counterOffer))
+        vehicleInfo.reserveAmount != null && vehicleInfo.reserveAmount != 0
+            ? const SizedBox.shrink()
+            : AppTexts.smallText(
+                text: 'Counter Offer: ${vehicleInfo.counterAmount ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              ),
+
+      // 6. Remaining Details based on displayTypes
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: displayTypes.map((type) {
+          switch (type) {
+            case VehicleDetailType.title:
+              return const SizedBox.shrink(); // Already handled above
+            case VehicleDetailType.vin:
+              return const SizedBox.shrink(); // Already handled above
+            case VehicleDetailType.reservedPrice:
+              return const SizedBox.shrink(); // Already handled above
+            case VehicleDetailType.counterOffer:
+              return const SizedBox.shrink(); // Already handled above
+            case VehicleDetailType.docApproved:
+              return Row(
+                children: [
+                  AppTexts.smallText(
+                    text: 'Document:',
+                    fontWeight: FontWeight.bold,
+                  ),
+                  const SizedBox(width: 4),
+                  AppTexts.smallText(
+                    text: vehicleInfo.docApproved == 0
+                        ? 'Not Approved'
+                        : 'Approved',
+                    fontWeight: FontWeight.bold,
+                    color: vehicleInfo.docApproved == 0
+                        ? Colors.red
+                        : Colors.green,
+                  ),
+                ],
+              );
+            case VehicleDetailType.docReceived:
+              return vehicleInfo.status == 26
+                  ? Column(
+                      children: [
+                        Row(
+                          children: [
+                            AppTexts.smallText(
+                              text: 'Document:',
+                              fontWeight: FontWeight.bold,
+                            ),
+                            const SizedBox(width: 4),
+                            AppTexts.smallText(
+                              text: vehicleInfo.docReceived == 0
+                                  ? 'Not Received'
+                                  : 'Received',
+                              fontWeight: FontWeight.bold,
+                              color: vehicleInfo.docReceived == 0
+                                  ? Colors.red
+                                  : Colors.green,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            AppTexts.smallText(
+                              text: 'Gate Pass:',
+                              fontWeight: FontWeight.bold,
+                            ),
+                            const SizedBox(width: 4),
+                            AppTexts.smallText(
+                              text: vehicleInfo.gatePassEntry == 'Pending'
+                                  ? 'Not Generated'
+                                  : 'Generated',
+                              fontWeight: FontWeight.bold,
+                              color: vehicleInfo.gatePassEntry == 'Pending'
+                                  ? Colors.red
+                                  : Colors.green,
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        AppTexts.smallText(
+                          text: 'Document:',
+                          fontWeight: FontWeight.bold,
+                        ),
+                        const SizedBox(width: 4),
+                        AppTexts.smallText(
+                          text: vehicleInfo.docReceived == 0
+                              ? 'Not Received'
+                              : 'Received',
+                          fontWeight: FontWeight.bold,
+                          color: vehicleInfo.docReceived == 0
+                              ? Colors.red
+                              : Colors.green,
+                        ),
+                      ],
+                    );
+            case VehicleDetailType.runs:
+              return AppTexts.smallText(
+                text: 'RUNS: ${vehicleInfo.runs ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              );
+            case VehicleDetailType.price:
+              return AppTexts.smallText(
+                text: 'Price: ${vehicleInfo.reserveAmount ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              );
+            case VehicleDetailType.reservedAmount:
+              return Row(
+                children: [
+                  AppTexts.smallText(
+                    text: 'Reserved Price:',
+                    fontWeight: FontWeight.bold,
+                  ),
+                  const SizedBox(width: 4),
+                  AppTexts.smallText(
+                    text: '${vehicleInfo.reserveAmount ?? 'N/A'}',
+                    fontWeight: FontWeight.bold,
+                    color:
+                        vehicleInfo.status! >= 25 ? Colors.green : Colors.red,
+                  ),
+                ],
+              );
+            case VehicleDetailType.auction:
+              return AppTexts.smallText(
+                text: 'Auction: ${vehicleInfo.auctionName ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              );
+            case VehicleDetailType.sequence:
+              return AppTexts.smallText(
+                text: 'Sequence: ${vehicleInfo.serial ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              );
+            case VehicleDetailType.soldDate:
+              return AppTexts.smallText(
+                text: 'Sold Date: ${vehicleInfo.soldDate ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              );
+            case VehicleDetailType.soldPrice:
+              return AppTexts.smallText(
+                text: 'Sold Price: ${vehicleInfo.sellingPrice ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              );
+            case VehicleDetailType.maxBid:
+              return AppTexts.smallText(
+                text: 'Max Bid: ${vehicleInfo.sellingPrice ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              );
+            case VehicleDetailType.statusName:
+              return AppTexts.smallText(
+                text: 'Status: ${vehicleInfo.statusName ?? 'N/A'}',
+                fontWeight: FontWeight.bold,
+              );
+          }
+        }).toList(),
+      ),
+
+      const SizedBox(height: 6),
+      if (vehicleInfo.status == 0 || vehicleInfo.status == 50)
+        // 3. Divider
+        const Divider(thickness: 1, color: Colors.grey),
+
+      // 5. Action Buttons
+      if (vehicleInfo.status == 0 || vehicleInfo.status == 50)
+        Row(
+          children: [
+            Expanded(
+              child: AppTexts.smallText(
+                text: 'ACTION',
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  AppButtons.iconButtonWithBg(
+                    onTap: () {
+                      AppDialogs.deleteConfirmation(context, onTapBtn2: () {
+                        if (vehicleInfo.id != null) {
+                          onTapDelete?.call(vehicleInfo.id!);
+                        }
+                      });
+                    },
+                    icon: Icons.delete,
+                  ),
+                  SizedBox(width: Dimensions.getWidth(20)),
+                  AppButtons.iconButtonWithBg(
+                    onTap: () {
+                      onTapEdit?.call(vehicleInfo.id!);
+                    },
+                    icon: Icons.edit,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+    ],
   );
 }
+
+// Widget _vehicleCarDetails({
+//   required MyAllCarsData vehicleInfo,
+//   required List<VehicleDetailType> displayTypes,
+// }) {
+//   return Column(
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     children: displayTypes.map((type) {
+//       switch (type) {
+//         case VehicleDetailType.title:
+//           return AppTexts.smallText(
+//             text: 'Title: ${vehicleInfo.title ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.vin:
+//           return AppTexts.smallText(
+//             text: 'Vin: ${vehicleInfo.vin ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//
+//         case VehicleDetailType.reservedPrice:
+//           return Row(
+//             children: [
+//               AppTexts.smallText(
+//                 text: 'Reserved Price:',
+//                 fontWeight: FontWeight.bold,
+//               ),
+//               SizedBox(
+//                 width: Dimensions.getWidth(4),
+//               ),
+//               AppTexts.smallText(
+//                 text: '${vehicleInfo.reserveAmount ?? 'N/A'}',
+//                 fontWeight: FontWeight.bold,
+//                 color: vehicleInfo.status == 25 ? Colors.green : Colors.red,
+//               ),
+//             ],
+//           );
+//
+//         case VehicleDetailType.counterOffer:
+//           return vehicleInfo.reserveAmount != null &&
+//                   vehicleInfo.reserveAmount != 0
+//               ? const SizedBox.shrink()
+//               : AppTexts.smallText(
+//                   text: 'Counter Offer: ${vehicleInfo.counterAmount ?? 'N/A'}',
+//                   fontWeight: FontWeight.bold,
+//                 );
+//
+//         case VehicleDetailType.docApproved:
+//           return Row(
+//             children: [
+//               AppTexts.smallText(
+//                 text: 'Document:',
+//                 fontWeight: FontWeight.bold,
+//               ),
+//               SizedBox(
+//                 width: Dimensions.getWidth(4),
+//               ),
+//               AppTexts.smallText(
+//                 text:
+//                     vehicleInfo.docApproved == 0 ? 'Not Approved' : 'Approved',
+//                 fontWeight: FontWeight.bold,
+//                 color: vehicleInfo.docApproved == 0 ? Colors.red : Colors.green,
+//               ),
+//             ],
+//           );
+//         case VehicleDetailType.docReceived:
+//           return AppTexts.smallText(
+//             text:
+//                 'Document Status: ${vehicleInfo.docReceived == 0 ? 'Not Received' : 'Received'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.runs:
+//           return AppTexts.smallText(
+//             text: 'RUNS: ${vehicleInfo.runs ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.price:
+//           return AppTexts.smallText(
+//             text: 'Price: ${vehicleInfo.reserveAmount ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.reservedAmount:
+//           return AppTexts.smallText(
+//             text: 'Reserve Amount: ${vehicleInfo.reserveAmount ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.auction:
+//           return AppTexts.smallText(
+//             text: 'Auction: ${vehicleInfo.auctionName ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.sequence:
+//           return AppTexts.smallText(
+//             text: 'Sequence: ${vehicleInfo.serial ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.soldDate:
+//           return AppTexts.smallText(
+//             text: 'Sold Date: ${vehicleInfo.soldDate ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.soldPrice:
+//           return AppTexts.smallText(
+//             text: 'Sold Price: ${vehicleInfo.sellingPrice ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.maxBid:
+//           return AppTexts.smallText(
+//             text: 'Max Bid: ${vehicleInfo.sellingPrice ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//         case VehicleDetailType.statusName:
+//           return AppTexts.smallText(
+//             text: 'Status: ${vehicleInfo.statusName ?? 'N/A'}',
+//             fontWeight: FontWeight.bold,
+//           );
+//       }
+//     }).toList(),
+//   );
+// }
 
 Widget _vehicleSkeleton() {
   return Container(

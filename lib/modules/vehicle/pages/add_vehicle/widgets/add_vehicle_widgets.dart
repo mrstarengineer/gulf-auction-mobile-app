@@ -56,6 +56,7 @@ class AddVehicleWidgets {
     TextEditingController? trimTextController,
     VoidCallback? onTapAutoFill,
     required bool termsAndConditionsAgreed,
+    required bool isReservedApproved,
     ValueChanged<bool?>? onChangeTermsAndConditionsAgreed,
     VoidCallback? onTapSubmit,
     VoidCallback? onTapRemoveDocument,
@@ -475,6 +476,7 @@ class AddVehicleWidgets {
           AppTextFields.textFieldWithTitle(
               keyboardType: TextInputType.number,
               title: 'Reserve Price',
+              enabled: isReservedApproved ? false : true,
               controller: reservePriceTextController,
               validator: (value) {
                 if (value == null || value.isEmpty) {

@@ -39,6 +39,7 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                   // onChangedSaleType: (id) {
                   //   addVehicleController.setSelectedSaleExecutiveId = id;
                   // },
+                  isReservedApproved: editVehicleInfoData?.status == 25,
                   formKey: formKey,
                   isEditVehicle: editVehicleInfoData != null,
                   hasKeys: addVehicleController.hasKeys,
@@ -75,7 +76,7 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                   transmission: addVehicleController
                       .vehicleStaticDataOptions?.transmission,
                   // cylinder:
-                      // addVehicleController.vehicleStaticDataOptions?.cylinders,
+                  // addVehicleController.vehicleStaticDataOptions?.cylinders,
                   primaryDamage:
                       addVehicleController.vehicleStaticDataOptions?.damages,
                   secondaryDamage:
@@ -113,191 +114,157 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                   plan: addVehicleController.plan,
                   passingTest: addVehicleController.passingTest,
                   onChangeDocumentType: (value) {
-                    addVehicleController.documentType = value;
-                  },
-                  onChangeOdometerType: (value) {
-                    addVehicleController.odometerType = value;
-                  },
-                  onChangePlanType: (value) {
-                    addVehicleController.plan = value;
-                  },
-                  onChangePassingTestType: (value) {
-                    addVehicleController.passingTest = value;
-                  },
-                  onChangeHasKeys: (value) {
-                    addVehicleController.hasKeys = value;
-                  },
-                  onChangedMake: (make) {
-                    addVehicleController.fetchModel(makeId: '${make?.id}');
-                    addVehicleController.selectedMake = make?.id ?? 0;
-                  },
-                  onChangedModels: (models) {
-                    addVehicleController.selectedModel = models?.id ?? 0;
-                  },
-                  onChangedBodyStyles: (bodyStyle) {
-                    addVehicleController.selectedBodyStyle = bodyStyle?.id ?? 0;
-                  },
-                  onChangedEngineType: (engineType) {
-                    addVehicleController.selectedEngineType =
-                        engineType?.id ?? 0;
-                  },
-                  onChangedFuelType: (fuelType) {
-                    addVehicleController.selectedFuelType = fuelType?.id ?? 0;
-                  },
-                  onChangedDriveTrains: (driveTrain) {
-                    addVehicleController.selectedDriveTrain =
-                        driveTrain?.id ?? 0;
-                  },
-                  onChangedTransmission: (transmission) {
-                    addVehicleController.selectedTransmission =
-                        transmission?.id ?? 0;
-                  },
+                addVehicleController.documentType = value;
+              }, onChangeOdometerType: (value) {
+                addVehicleController.odometerType = value;
+              }, onChangePlanType: (value) {
+                addVehicleController.plan = value;
+              }, onChangePassingTestType: (value) {
+                addVehicleController.passingTest = value;
+              }, onChangeHasKeys: (value) {
+                addVehicleController.hasKeys = value;
+              }, onChangedMake: (make) {
+                addVehicleController.fetchModel(makeId: '${make?.id}');
+                addVehicleController.selectedMake = make?.id ?? 0;
+              }, onChangedModels: (models) {
+                addVehicleController.selectedModel = models?.id ?? 0;
+              }, onChangedBodyStyles: (bodyStyle) {
+                addVehicleController.selectedBodyStyle = bodyStyle?.id ?? 0;
+              }, onChangedEngineType: (engineType) {
+                addVehicleController.selectedEngineType = engineType?.id ?? 0;
+              }, onChangedFuelType: (fuelType) {
+                addVehicleController.selectedFuelType = fuelType?.id ?? 0;
+              }, onChangedDriveTrains: (driveTrain) {
+                addVehicleController.selectedDriveTrain = driveTrain?.id ?? 0;
+              }, onChangedTransmission: (transmission) {
+                addVehicleController.selectedTransmission =
+                    transmission?.id ?? 0;
+              },
                   // onChangedCylinder: (transmission) {
                   //   addVehicleController.selectedCylinder =
                   //       transmission?.id ?? 0;
                   // },
                   onChangedPrimaryDamage: (damage) {
-                    addVehicleController.selectedPrimaryDamage =
-                        damage?.id ?? 0;
-                  },
-                  onChangedSecondaryDamage: (damage) {
-                    addVehicleController.selectedSecondaryDamage =
-                        damage?.id ?? 0;
-                  },
-                  onChangedColors: (color) {
-                    addVehicleController.selectedColor = color?.id ?? 0;
-                  },
-                  onChangedMileageType: (mileageType) {
-                    addVehicleController.selectedMileageType =
-                        mileageType?.id ?? 0;
-                  },
-                  onChangedHighlight: (highlights) {
-                    addVehicleController.selectedHighlight =
-                        highlights?.id ?? 0;
-                  },
+                addVehicleController.selectedPrimaryDamage = damage?.id ?? 0;
+              }, onChangedSecondaryDamage: (damage) {
+                addVehicleController.selectedSecondaryDamage = damage?.id ?? 0;
+              }, onChangedColors: (color) {
+                addVehicleController.selectedColor = color?.id ?? 0;
+              }, onChangedMileageType: (mileageType) {
+                addVehicleController.selectedMileageType = mileageType?.id ?? 0;
+              }, onChangedHighlight: (highlights) {
+                addVehicleController.selectedHighlight = highlights?.id ?? 0;
+              },
                   // onChangedSaleExecutiveType: (salesExecutive) {},
                   onChangedVehicleCategory: (category) {
-                    // if (category?.id == 2) {
-                    //   addVehicleController.reservePriceTextController.clear();
-                    //   addVehicleController.selectedSaleType = 0;
-                    // }
-                    addVehicleController.selectedCategory = category?.id ?? 0;
-                  },
+                // if (category?.id == 2) {
+                //   addVehicleController.reservePriceTextController.clear();
+                //   addVehicleController.selectedSaleType = 0;
+                // }
+                addVehicleController.selectedCategory = category?.id ?? 0;
+              },
                   // onChangedSaleType: (sellType) {
                   //   addVehicleController.selectedSaleType = sellType?.id ?? 0;
                   // },
                   onTapAutoFill: () {
-                    if (addVehicleController.vinTextController.text.length <
-                        17) {
-                      AppToasts.shortToast(Strings.vinCharWarningText);
+                if (addVehicleController.vinTextController.text.length < 17) {
+                  AppToasts.shortToast(Strings.vinCharWarningText);
+                } else {
+                  context.showLoaderOverlay;
+                  addVehicleController.autoFillByVin().then((response) {
+                    if (response.isSuccess) {
+                      addVehicleController
+                          .fetchModel(
+                              makeId: '${addVehicleController.selectedMake}')
+                          .then((modelResponse) {
+                        context.hideLoaderOverlay;
+                        if (modelResponse.isSuccess) {
+                          addVehicleController.selectedModel =
+                              addVehicleController.autoFillByVinData?.modelId;
+                        } else {
+                          AppToasts.shortToast(response.message);
+                        }
+                      });
                     } else {
-                      context.showLoaderOverlay;
-                      addVehicleController.autoFillByVin().then((response) {
+                      context.hideLoaderOverlay;
+                    }
+                  });
+                }
+              }, onUploadPhoto: (imgPath) {
+                context.showLoaderOverlay;
+                addVehicleController
+                    .uploadPhotoOrDocument(imgPath: imgPath)
+                    .then((response) {
+                  context.hideLoaderOverlay;
+                  if (!response.isSuccess) {
+                    AppToasts.shortToast(response.message);
+                  }
+                });
+              }, onUploadDocument: (imgPath) {
+                context.showLoaderOverlay;
+                addVehicleController
+                    .uploadPhotoOrDocument(imgPath: imgPath, isPhoto: false)
+                    .then((response) {
+                  context.hideLoaderOverlay;
+                  if (!response.isSuccess) {
+                    AppToasts.shortToast(response.message);
+                  }
+                });
+              }, onTapRemovePhoto: (imgPath) {
+                addVehicleController.vehiclePhotos
+                    .removeWhere((e) => e == imgPath);
+              }, onTapRemoveDocument: () {
+                addVehicleController.vccDocument = '';
+              }, onTapPreview: (url) {
+                final extension = getFileExtension(url);
+                if (extension == 'jpg' ||
+                    extension == 'png' ||
+                    extension == 'pdf') {
+                  Get.toNamed(AppRoutes.filesPreview, arguments: url);
+                } else {
+                  AppToasts.shortToast(Strings.unsupportedFileFormat);
+                }
+              }, onTapSubmit: () {
+                if (formKey.currentState!.validate()) {
+                  if (addVehicleController.vehiclePhotos.isEmpty) {
+                    AppToasts.shortToast(Strings.addVehiclePhotoWarningTxt);
+                  } else if (addVehicleController.vccDocument.isEmpty) {
+                    AppToasts.shortToast(Strings.addVehicleDocumentWarningTxt);
+                  } else if (!addVehicleController.termsAndConditionsAgreed) {
+                    AppToasts.shortToast(
+                        'termsAgreementAddVehicleWarningTxt'.tr);
+                  } else {
+                    context.showLoaderOverlay;
+                    if (editVehicleInfoData != null) {
+                      addVehicleController
+                          .editVehicle(vehicleId: editVehicleInfoData!.id)
+                          .then((response) async {
                         if (response.isSuccess) {
-                          addVehicleController
-                              .fetchModel(
-                                  makeId:
-                                      '${addVehicleController.selectedMake}')
-                              .then((modelResponse) {
-                            context.hideLoaderOverlay;
-                            if (modelResponse.isSuccess) {
-                              addVehicleController.selectedModel =
-                                  addVehicleController
-                                      .autoFillByVinData?.modelId;
-                            } else {
-                              AppToasts.shortToast(response.message);
-                            }
-                          });
+                          await Get.find<SellMyCarController>().fetchVehicles(
+                              pageType: MSellMyCarOptions.allVehicle);
+                          context.hideLoaderOverlay;
+                          Get.back(result: 'OK');
                         } else {
                           context.hideLoaderOverlay;
                         }
+                        AppToasts.shortToast(response.message);
+                      });
+                    } else {
+                      addVehicleController.createVehicle().then((response) {
+                        context.hideLoaderOverlay;
+                        if (response.isSuccess) {
+                          Get.back();
+                        }
+                        AppToasts.shortToast(response.message);
                       });
                     }
-                  },
-                  onUploadPhoto: (imgPath) {
-                    context.showLoaderOverlay;
-                    addVehicleController
-                        .uploadPhotoOrDocument(imgPath: imgPath)
-                        .then((response) {
-                      context.hideLoaderOverlay;
-                      if (!response.isSuccess) {
-                        AppToasts.shortToast(response.message);
-                      }
-                    });
-                  },
-                  onUploadDocument: (imgPath) {
-                    context.showLoaderOverlay;
-                    addVehicleController
-                        .uploadPhotoOrDocument(imgPath: imgPath, isPhoto: false)
-                        .then((response) {
-                      context.hideLoaderOverlay;
-                      if (!response.isSuccess) {
-                        AppToasts.shortToast(response.message);
-                      }
-                    });
-                  },
-                  onTapRemovePhoto: (imgPath) {
-                    addVehicleController.vehiclePhotos
-                        .removeWhere((e) => e == imgPath);
-                  },
-                  onTapRemoveDocument: () {
-                    addVehicleController.vccDocument = '';
-                  },
-                  onTapPreview: (url) {
-                    final extension = getFileExtension(url);
-                    if (extension == 'jpg' ||
-                        extension == 'png' ||
-                        extension == 'pdf') {
-                      Get.toNamed(AppRoutes.filesPreview, arguments: url);
-                    } else {
-                      AppToasts.shortToast(Strings.unsupportedFileFormat);
-                    }
-                  },
-                  onTapSubmit: () {
-                    if (formKey.currentState!.validate()) {
-                      if (addVehicleController.vehiclePhotos.isEmpty) {
-                        AppToasts.shortToast(Strings.addVehiclePhotoWarningTxt);
-                      } else if (addVehicleController.vccDocument.isEmpty) {
-                        AppToasts.shortToast(
-                            Strings.addVehicleDocumentWarningTxt);
-                      } else if (!addVehicleController
-                          .termsAndConditionsAgreed) {
-                        AppToasts.shortToast(
-                            'termsAgreementAddVehicleWarningTxt'.tr);
-                      } else {
-                        context.showLoaderOverlay;
-                        if (editVehicleInfoData != null) {
-                          addVehicleController
-                              .editVehicle(vehicleId: editVehicleInfoData!.id)
-                              .then((response) async {
-                            if (response.isSuccess) {
-                              await Get.find<SellMyCarController>()
-                                  .fetchVehicles(
-                                      pageType: MSellMyCarOptions.allVehicle);
-                              context.hideLoaderOverlay;
-                              Get.back(result: 'OK');
-                            } else {
-                              context.hideLoaderOverlay;
-                            }
-                            AppToasts.shortToast(response.message);
-                          });
-                        } else {
-                          addVehicleController.createVehicle().then((response) {
-                            context.hideLoaderOverlay;
-                            if (response.isSuccess) {
-                              Get.back();
-                            }
-                            AppToasts.shortToast(response.message);
-                          });
-                        }
-                      }
-                    }
-                  },
-                  onTapTermsAndConditions: () {
-                    Get.toNamed(AppRoutes.websPreview,
-                        arguments: Environment.baseApiUrlV1 +
-                            ApiEndpoints.termsAndConditions);
-                  }),
+                  }
+                }
+              }, onTapTermsAndConditions: () {
+                Get.toNamed(AppRoutes.websPreview,
+                    arguments: Environment.baseApiUrlV1 +
+                        ApiEndpoints.termsAndConditions);
+              }),
             ),
           );
         }

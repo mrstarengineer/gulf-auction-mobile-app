@@ -49,6 +49,7 @@ class MyAllCarsData {
   dynamic reserveAmount;
   dynamic vehicleType;
   String? engineType;
+  String? gatePassEntry;
   String? cylinder;
   String? transmission;
   String? drive;
@@ -67,6 +68,7 @@ class MyAllCarsData {
         this.title,
         this.vin,
         this.thumbnailUrl,
+        this.gatePassEntry,
         this.lotNumber,
         this.year,
         this.make,
@@ -117,6 +119,7 @@ class MyAllCarsData {
     model = json['model'];
     color = json['color'];
     status = json['status'];
+    gatePassEntry = json['seller_entry_gate_pass'];
     docApproved = json['doc_approved'];
     categoryName = json['category_name'];
     soldDate = json['sold_date'];
