@@ -20,7 +20,8 @@ class AddVehicleController extends GetxController {
   late TextEditingController yearTextController;
   late TextEditingController priceTextController;
   late TextEditingController sellingPriceTextController;
-  // late TextEditingController reservePriceTextController;
+
+  late TextEditingController reservePriceTextController;
   late TextEditingController trimTextController;
 
   final MyCarInfo? editVehicleInfoData = Get.arguments;
@@ -32,7 +33,7 @@ class AddVehicleController extends GetxController {
     yearTextController = TextEditingController();
     priceTextController = TextEditingController();
     sellingPriceTextController = TextEditingController();
-    // reservePriceTextController = TextEditingController();
+    reservePriceTextController = TextEditingController();
     trimTextController = TextEditingController();
 
     await fetchStaticDataOptions();
@@ -51,7 +52,7 @@ class AddVehicleController extends GetxController {
     yearTextController.dispose();
     priceTextController.dispose();
     sellingPriceTextController.dispose();
-    // reservePriceTextController.dispose();
+    reservePriceTextController.dispose();
     trimTextController.dispose();
     super.onClose();
   }
@@ -59,16 +60,18 @@ class AddVehicleController extends GetxController {
   updateAllData() {
     vinTextController.text = editVehicleInfoData?.vin ?? '';
     trimTextController.text = editVehicleInfoData?.trim ?? '';
+    reservePriceTextController.text =
+        '${editVehicleInfoData?.reserveAmount ?? ''}';
     yearTextController.text = editVehicleInfoData?.year ?? '';
     selectedBodyStyle = editVehicleInfoData?.bodyStyleId;
     selectedEngineType = editVehicleInfoData?.engineTypeId;
     selectedFuelType = editVehicleInfoData?.fuelTypeId;
     selectedDriveTrain = editVehicleInfoData?.driveTrainId;
     selectedTransmission = editVehicleInfoData?.transmissionId;
-    selectedCylinder = editVehicleInfoData?.cylinderId;
+    // selectedCylinder = editVehicleInfoData?.cylinderId;
     selectedPrimaryDamage = editVehicleInfoData?.primaryDamageId;
     selectedSecondaryDamage = editVehicleInfoData?.secondaryDamageId;
-    setSelectedSaleExecutiveId = editVehicleInfoData?.salesExecutiveId;
+    // setSelectedSaleExecutiveId = editVehicleInfoData?.salesExecutiveId;
     odometerTextController.text = editVehicleInfoData?.odometer == null
         ? ''
         : '${editVehicleInfoData!.odometer}';
@@ -77,15 +80,27 @@ class AddVehicleController extends GetxController {
     hasKeys = editVehicleInfoData?.keys == true
         ? MVehicleHasKeys.yes
         : MVehicleHasKeys.no;
+    documentType = editVehicleInfoData?.documentType == 'Vcc'
+        ? MVehicleDocumentType.vcc
+        : MVehicleDocumentType.hayaza;
+    odometerType = editVehicleInfoData?.odometerType == 'Mi'
+        ? MVehicleOdometerType.mi
+        : MVehicleOdometerType.km;
+    passingTest = editVehicleInfoData?.passingTest == 1
+        ? MVehicleHasKeys.yes
+        : MVehicleHasKeys.no;
+    plan = editVehicleInfoData?.plan == 'Premium'
+        ? MVehiclePlanType.premium
+        : MVehiclePlanType.standard;
     selectedHighlight = editVehicleInfoData?.highlightId;
     selectedCategory = editVehicleInfoData?.categoryId;
     priceTextController.text = editVehicleInfoData?.startBidAmount == null
         ? ''
         : '${editVehicleInfoData!.startBidAmount}';
     selectedSaleType = editVehicleInfoData?.saleType;
-    priceTextController.text = editVehicleInfoData?.reserveAmount == null
-        ? ''
-        : '${editVehicleInfoData!.reserveAmount}';
+    // priceTextController.text = editVehicleInfoData?.reserveAmount == null
+    //     ? ''
+    //     : '${editVehicleInfoData!.reserveAmount}';
     sellingPriceTextController.text = editVehicleInfoData?.sellingPrice == null
         ? ''
         : '${editVehicleInfoData!.sellingPrice}';
@@ -126,10 +141,25 @@ class AddVehicleController extends GetxController {
   set hasKeys(value) => _hasKeys.value = value;
 
   final _documentType = MVehicleDocumentType.vcc.obs;
+  final _odometerType = MVehicleOdometerType.mi.obs;
+  final _passingTest = MVehicleHasKeys.no.obs;
+  final _plan = MVehiclePlanType.standard.obs;
 
   MVehicleDocumentType get documentType => _documentType.value;
 
+  MVehicleOdometerType get odometerType => _odometerType.value;
+
+  MVehiclePlanType get plan => _plan.value;
+
+  MVehicleHasKeys get passingTest => _passingTest.value;
+
   set documentType(value) => _documentType.value = value;
+
+  set odometerType(value) => _odometerType.value = value;
+
+  set plan(value) => _plan.value = value;
+
+  set passingTest(value) => _passingTest.value = value;
 
   final _vccDocument = ''.obs;
 
@@ -185,11 +215,11 @@ class AddVehicleController extends GetxController {
 
   set selectedTransmission(value) => _selectedTransmission.value = value;
 
-  final _selectedCylinder = 0.obs;
+  // final _selectedCylinder = 0.obs;
 
-  int get selectedCylinder => _selectedCylinder.value;
+  // int get selectedCylinder => _selectedCylinder.value;
 
-  set selectedCylinder(value) => _selectedCylinder.value = value;
+  // set selectedCylinder(value) => _selectedCylinder.value = value;
 
   final _selectedPrimaryDamage = 0.obs;
 
@@ -227,12 +257,12 @@ class AddVehicleController extends GetxController {
 
   set selectedSaleType(value) => _selectedSaleType.value = value;
 
-  final _selectedSaleExecutiveId = 0.obs;
+  // final _selectedSaleExecutiveId = 0.obs;
 
-  int get selectedSaleExecutiveId => _selectedSaleExecutiveId.value;
+  // int get selectedSaleExecutiveId => _selectedSaleExecutiveId.value;
 
-  set setSelectedSaleExecutiveId(value) =>
-      _selectedSaleExecutiveId.value = value;
+  // set setSelectedSaleExecutiveId(value) =>
+  //     _selectedSaleExecutiveId.value = value;
 
 //   MODELS
 
@@ -448,10 +478,10 @@ class AddVehicleController extends GetxController {
 
       final response = await _repo.createVehicle(body: {
         'selling_price': sellingPriceTextController.text.trim(),
-        'reserve_amount': priceTextController.text.trim(),
+        'reserve_amount': reservePriceTextController.text.trim(),
         'body_style_id': selectedBodyStyle != 0 ? selectedBodyStyle : null,
         'color_id': selectedColor != 0 ? selectedColor : null,
-        'cylinder_id': selectedCylinder != 0 ? selectedCylinder : null,
+        // 'cylinder_id': selectedCylinder != 0 ? selectedCylinder : null,
         'drive_train_id': selectedDriveTrain != 0 ? selectedDriveTrain : null,
         'engine_type_id': selectedEngineType != 0 ? selectedEngineType : null,
         'file_urls': {
@@ -468,22 +498,27 @@ class AddVehicleController extends GetxController {
             selectedPrimaryDamage != 0 ? selectedPrimaryDamage : null,
         'secondary_damage_id':
             selectedSecondaryDamage != 0 ? selectedSecondaryDamage : null,
-        'start_bid_amount': priceTextController.text.trim(),
+        'start_bid_amount': 0,
         // 'sale_type': selectedSaleType != 0 ? selectedSaleType : null,
         'sale_type': 2,
-        'sales_executive_id': selectedSaleExecutiveId,
+        // 'sales_executive_id': selectedSaleExecutiveId,
         'transmission_id':
             selectedTransmission != 0 ? selectedTransmission : null,
         'vehicle_model_id': selectedModel != 0 ? selectedModel : null,
-        'category_id': selectedCategory != 0 ? selectedCategory : null,
+        // 'category_id': selectedCategory != 0 ? selectedCategory : null,
+        'category_id': 1, // AUCTION VEHICLE
         'vin': vinTextController.text.trim(),
         'year': yearTextController.text.isNotEmpty
             ? int.parse(yearTextController.text.trim())
             : null,
         'terms_condition': termsAndConditionsAgreed,
         'vcc_document': vccDocument,
-        'document_type':
-            documentType == MVehicleDocumentType.vcc ? 'vcc' : 'hayaza',
+        'document_type': documentType == MVehicleDocumentType.vcc
+            ? 'vcc'
+            : 'Hayaza',
+        'odometer_type': odometerType == MVehicleOdometerType.mi ? 'Mi' : 'Km',
+        'plan': plan == MVehiclePlanType.standard ? 'Standard' : 'Premium',
+        'passing_test': passingTest == MVehicleHasKeys.yes ? 1 : 2,
       });
 
       final apiResponseHandler = ApiResponseHandler(
@@ -513,12 +548,12 @@ class AddVehicleController extends GetxController {
 
       final response = await _repo.updateVehicle(vehicleId: vehicleId, body: {
         'id': vehicleId,
-        'sales_executive_id': selectedSaleExecutiveId,
+        // 'sales_executive_id': selectedSaleExecutiveId,
         'selling_price': sellingPriceTextController.text.trim(),
-        'reserve_amount': priceTextController.text.trim(),
+        'reserve_amount': reservePriceTextController.text.trim(),
         'body_style_id': selectedBodyStyle != 0 ? selectedBodyStyle : null,
         'color_id': selectedColor != 0 ? selectedColor : null,
-        'cylinder_id': selectedCylinder != 0 ? selectedCylinder : null,
+        // 'cylinder_id': selectedCylinder != 0 ? selectedCylinder : null,
         'drive_train_id': selectedDriveTrain != 0 ? selectedDriveTrain : null,
         'engine_type_id': selectedEngineType != 0 ? selectedEngineType : null,
         'file_urls': {
@@ -548,6 +583,12 @@ class AddVehicleController extends GetxController {
             : null,
         'terms_condition': termsAndConditionsAgreed,
         'vcc_document': vccDocument,
+        'document_type': documentType == MVehicleDocumentType.vcc
+            ? 'vcc'
+            : 'Hayaza',
+        'odometer_type': odometerType == MVehicleOdometerType.mi ? 'Mi' : 'Km',
+        'plan': plan == MVehiclePlanType.standard ? 'Standard' : 'Premium',
+        'passing_test': passingTest == MVehicleHasKeys.yes ? 1 : 2,
       });
 
       final apiResponseHandler = ApiResponseHandler(

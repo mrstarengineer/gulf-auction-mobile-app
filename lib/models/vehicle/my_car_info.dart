@@ -24,6 +24,11 @@ class MyCarInfo {
   int? odometer;
   int? saleType;
   String? saleTypeName;
+  String? documentType;
+  String? plan;
+  String? odometerType;
+  String? passingTestName;
+  int? passingTest;
   String? trim;
   dynamic titleCodeId;
   dynamic titleCode;
@@ -91,6 +96,11 @@ class MyCarInfo {
       this.retailValue,
       this.sellingPrice,
       this.reserveAmount,
+      this.documentType,
+      this.odometerType,
+      this.passingTest,
+      this.passingTestName,
+      this.plan,
       this.startBidAmount,
       this.odometer,
       this.saleType,
@@ -158,6 +168,11 @@ class MyCarInfo {
     retailValue = json['retail_value'];
     sellingPrice = json['selling_price'];
     reserveAmount = json['reserve_amount'];
+    documentType = json['document_type'];
+    odometerType = json['odometer_type'];
+    passingTest = json['passing_test'];
+    passingTestName = json['passing_test_name'];
+    plan = json['plan'];
     startBidAmount = json['start_bid_amount'];
     odometer = json['odometer'];
     saleType = json['sale_type'];
@@ -279,15 +294,17 @@ class Admin {
   int? role;
   String? updatedAt;
   String? profilePhoto;
-  Admin(
-      {this.id,
-      this.name,
-      this.username,
-      this.email,
-      this.status,
-      this.role,
-      this.updatedAt,
-      this.profilePhoto,});
+
+  Admin({
+    this.id,
+    this.name,
+    this.username,
+    this.email,
+    this.status,
+    this.role,
+    this.updatedAt,
+    this.profilePhoto,
+  });
 
   Admin.fromJson(Map<String, dynamic> json) {
     id = json['id'];

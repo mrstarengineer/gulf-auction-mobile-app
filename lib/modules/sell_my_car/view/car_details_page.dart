@@ -42,7 +42,12 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBars.appBar(
-          title: vehicleTitle == 'null' ? 'Vehicle Details' : vehicleTitle),
+          title: vehicleTitle == 'null' ? 'Vehicle Details' : vehicleTitle,
+          isEdit: true,
+          onEditPressed: () {
+            Get.toNamed(AppRoutes.addVehicle,
+                arguments: _sellMyCarController.singleVehicleInfo);
+          }),
       body: Obx(() {
         final vehicleInfo = _sellMyCarController.singleVehicleInfo;
         if (_sellMyCarController.isLoadingInitial) {

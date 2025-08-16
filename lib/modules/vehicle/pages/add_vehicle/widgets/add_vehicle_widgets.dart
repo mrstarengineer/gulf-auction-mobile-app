@@ -11,82 +11,90 @@ import 'package:gulf_car_auction/utils/utils.dart';
 class AddVehicleWidgets {
   AddVehicleWidgets._();
 
-  static Widget body(BuildContext context,
-      {Key? formKey,
-      bool isEditVehicle = false,
-      List<VehiclePartInfo>? makes,
-      ValueChanged<VehiclePartInfo?>? onChangedMake,
-      List<VehiclePartInfo>? models,
-      ValueChanged<VehiclePartInfo?>? onChangedModels,
-      List<VehiclePartInfo>? bodyStyles,
-      ValueChanged<VehiclePartInfo?>? onChangedBodyStyles,
-      List<VehiclePartInfo>? engineType,
-      ValueChanged<VehiclePartInfo?>? onChangedEngineType,
-      List<VehiclePartInfo>? fuelType,
-      ValueChanged<VehiclePartInfo?>? onChangedFuelType,
-      List<VehiclePartInfo>? driveTrains,
-      ValueChanged<VehiclePartInfo?>? onChangedDriveTrains,
-      List<VehiclePartInfo>? transmission,
-      ValueChanged<VehiclePartInfo?>? onChangedTransmission,
-      List<VehiclePartInfo>? cylinder,
-      ValueChanged<VehiclePartInfo?>? onChangedCylinder,
-      List<VehiclePartInfo>? primaryDamage,
-      ValueChanged<VehiclePartInfo?>? onChangedPrimaryDamage,
-      List<VehiclePartInfo>? secondaryDamage,
-      ValueChanged<VehiclePartInfo?>? onChangedSecondaryDamage,
-      List<VehiclePartInfo>? colors,
-      ValueChanged<VehiclePartInfo?>? onChangedColors,
-      List<VehiclePartInfo>? mileageType,
-      ValueChanged<VehiclePartInfo?>? onChangedMileageType,
-      List<VehiclePartInfo>? highlight,
-      ValueChanged<VehiclePartInfo?>? onChangedHighlight,
-      List<VehiclePartInfo>? vehicleCategory,
-      ValueChanged<VehiclePartInfo?>? onChangedVehicleCategory,
-      // List<VehiclePartInfo>? saleTypes,
-      // ValueChanged<VehiclePartInfo?>? onChangedSaleType,
-      List<VehiclePartInfo>? saleExecutive,
-      ValueChanged<VehiclePartInfo?>? onChangedSaleExecutiveType,
-      TextEditingController? vinTextController,
-      TextEditingController? yearTextController,
-      TextEditingController? odometerTextController,
-      TextEditingController? priceTextController,
-      TextEditingController? sellingPriceTextController,
-      TextEditingController? reservePriceTextController,
-      TextEditingController? trimTextController,
-      VoidCallback? onTapAutoFill,
-      required bool termsAndConditionsAgreed,
-      ValueChanged<bool?>? onChangeTermsAndConditionsAgreed,
-      VoidCallback? onTapSubmit,
-      VoidCallback? onTapRemoveDocument,
-      ValueChanged<String>? onTapRemovePhoto,
-      ValueChanged<String>? onUploadPhoto,
-      ValueChanged<String>? onUploadDocument,
-      ValueChanged<String>? onTapPreview,
-      ValueChanged<MVehicleHasKeys>? onChangeHasKeys,
-      ValueChanged<MVehicleDocumentType>? onChangeDocumentType,
-      required List<String> vehiclePhotos,
-      required String documentPhoto,
-      required MVehicleHasKeys hasKeys,
-      required MVehicleDocumentType documentType,
-      required VoidCallback onTapTermsAndConditions,
-      int? selectedBodyStyleId,
-      int? selectedEngineTypeId,
-      int? selectedFuelTypeId,
-      int? selectedSaleExecutiveTypeId,
-      int? selectedDriveTrainId,
-      int? selectedTransmissionId,
-      int? selectedCylinderId,
-      int? selectedPrimaryDamageId,
-      int? selectedSecondaryDamageId,
-      int? selectedColorId,
-      int? selectedMileageTypeId,
-      int? selectedHighlightId,
-      int? selectedId,
-      int? selectedCategoryId,
-      int? selectedSaleTypeId,
-      int? selectedMakeId,
-      int? selectedModelId,
-      required ValueChanged<int?> onChangedSaleType}) {
+  static Widget body(
+    BuildContext context, {
+    Key? formKey,
+    bool isEditVehicle = false,
+    List<VehiclePartInfo>? makes,
+    ValueChanged<VehiclePartInfo?>? onChangedMake,
+    List<VehiclePartInfo>? models,
+    ValueChanged<VehiclePartInfo?>? onChangedModels,
+    List<VehiclePartInfo>? bodyStyles,
+    ValueChanged<VehiclePartInfo?>? onChangedBodyStyles,
+    List<VehiclePartInfo>? engineType,
+    ValueChanged<VehiclePartInfo?>? onChangedEngineType,
+    List<VehiclePartInfo>? fuelType,
+    ValueChanged<VehiclePartInfo?>? onChangedFuelType,
+    List<VehiclePartInfo>? driveTrains,
+    ValueChanged<VehiclePartInfo?>? onChangedDriveTrains,
+    List<VehiclePartInfo>? transmission,
+    ValueChanged<VehiclePartInfo?>? onChangedTransmission,
+    // List<VehiclePartInfo>? cylinder,
+    ValueChanged<VehiclePartInfo?>? onChangedCylinder,
+    List<VehiclePartInfo>? primaryDamage,
+    ValueChanged<VehiclePartInfo?>? onChangedPrimaryDamage,
+    List<VehiclePartInfo>? secondaryDamage,
+    ValueChanged<VehiclePartInfo?>? onChangedSecondaryDamage,
+    List<VehiclePartInfo>? colors,
+    ValueChanged<VehiclePartInfo?>? onChangedColors,
+    List<VehiclePartInfo>? mileageType,
+    ValueChanged<VehiclePartInfo?>? onChangedMileageType,
+    List<VehiclePartInfo>? highlight,
+    ValueChanged<VehiclePartInfo?>? onChangedHighlight,
+    // List<VehiclePartInfo>? vehicleCategory,
+    ValueChanged<VehiclePartInfo?>? onChangedVehicleCategory,
+    // List<VehiclePartInfo>? saleTypes,
+    // ValueChanged<VehiclePartInfo?>? onChangedSaleType,
+    // List<VehiclePartInfo>? saleExecutive,
+    // ValueChanged<VehiclePartInfo?>? onChangedSaleExecutiveType,
+    TextEditingController? vinTextController,
+    TextEditingController? yearTextController,
+    TextEditingController? odometerTextController,
+    TextEditingController? priceTextController,
+    TextEditingController? sellingPriceTextController,
+    TextEditingController? reservePriceTextController,
+    TextEditingController? trimTextController,
+    VoidCallback? onTapAutoFill,
+    required bool termsAndConditionsAgreed,
+    ValueChanged<bool?>? onChangeTermsAndConditionsAgreed,
+    VoidCallback? onTapSubmit,
+    VoidCallback? onTapRemoveDocument,
+    ValueChanged<String>? onTapRemovePhoto,
+    ValueChanged<String>? onUploadPhoto,
+    ValueChanged<String>? onUploadDocument,
+    ValueChanged<String>? onTapPreview,
+    ValueChanged<MVehicleHasKeys>? onChangeHasKeys,
+    ValueChanged<MVehicleDocumentType>? onChangeDocumentType,
+    ValueChanged<MVehicleOdometerType>? onChangeOdometerType,
+    ValueChanged<MVehiclePlanType>? onChangePlanType,
+    ValueChanged<MVehicleHasKeys>? onChangePassingTestType,
+    required List<String> vehiclePhotos,
+    required String documentPhoto,
+    required MVehicleHasKeys hasKeys,
+    required MVehicleDocumentType documentType,
+    required MVehicleOdometerType odometerType,
+    required MVehiclePlanType plan,
+    required MVehicleHasKeys passingTest,
+    required VoidCallback onTapTermsAndConditions,
+    int? selectedBodyStyleId,
+    int? selectedEngineTypeId,
+    int? selectedFuelTypeId,
+    // int? selectedSaleExecutiveTypeId,
+    int? selectedDriveTrainId,
+    int? selectedTransmissionId,
+    int? selectedCylinderId,
+    int? selectedPrimaryDamageId,
+    int? selectedSecondaryDamageId,
+    int? selectedColorId,
+    int? selectedMileageTypeId,
+    int? selectedHighlightId,
+    int? selectedId,
+    int? selectedCategoryId,
+    int? selectedSaleTypeId,
+    int? selectedMakeId,
+    int? selectedModelId,
+    // required ValueChanged<int?> onChangedSaleType
+  }) {
     return Form(
       key: formKey,
       child: Column(
@@ -154,6 +162,18 @@ class AddVehicleWidgets {
               onChanged: onChangedModels,
               validator: (value) {
                 if (value == null) {
+                  return 'filedCanNotBeEmptyTxt'.tr;
+                }
+                return null;
+              }),
+
+          // Trim
+          AppTextFields.textFieldWithTitle(
+              title: 'Trim',
+              keyboardType: TextInputType.text,
+              controller: trimTextController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
                   return 'filedCanNotBeEmptyTxt'.tr;
                 }
                 return null;
@@ -245,21 +265,21 @@ class AddVehicleWidgets {
               }),
 
           // Cylinder
-          AppPickersButtons.vehiclePartPicker(
-              title: 'Cylinder',
-              parts: cylinder ?? [],
-              initialItem: selectedCylinderId != 0
-                  ? cylinder
-                      ?.where((e) => e.id == selectedCylinderId)
-                      .singleOrNull
-                  : null,
-              onChanged: onChangedCylinder,
-              validator: (value) {
-                if (value == null) {
-                  return 'filedCanNotBeEmptyTxt'.tr;
-                }
-                return null;
-              }),
+          // AppPickersButtons.vehiclePartPicker(
+          //     title: 'Cylinder',
+          //     parts: cylinder ?? [],
+          //     initialItem: selectedCylinderId != 0
+          //         ? cylinder
+          //             ?.where((e) => e.id == selectedCylinderId)
+          //             .singleOrNull
+          //         : null,
+          //     onChanged: onChangedCylinder,
+          //     validator: (value) {
+          //       if (value == null) {
+          //         return 'filedCanNotBeEmptyTxt'.tr;
+          //       }
+          //       return null;
+          //     }),
 
           // Primary Damage
           AppPickersButtons.vehiclePartPicker(
@@ -295,6 +315,16 @@ class AddVehicleWidgets {
                 return null;
               }),
 
+          _odometerTypeBtns(
+              selectedValue: odometerType,
+              onChanged: (value) {
+                onChangeOdometerType?.call(value);
+              }),
+
+          SizedBox(
+            height: Dimensions.getHeight(10),
+          ),
+
           // Odometer
           AppTextFields.textFieldWithTitle(
               title: 'Odometer',
@@ -306,6 +336,9 @@ class AddVehicleWidgets {
                 }
                 return null;
               }),
+
+          // ODOMETER TYPE
+
 
           // Color
           AppPickersButtons.vehiclePartPicker(
@@ -339,16 +372,8 @@ class AddVehicleWidgets {
                 return null;
               }),
 
-          // KEYS
-          _keysSelectionBtns(
-              selectedValue: hasKeys,
-              onChanged: (value) {
-                onChangeHasKeys?.call(value);
-              }),
 
-          SizedBox(
-            height: Dimensions.getHeight(10),
-          ),
+
 
           // Highlight
           AppPickersButtons.vehiclePartPicker(
@@ -368,66 +393,56 @@ class AddVehicleWidgets {
               }),
 
           // Vehicle Category
-          AppPickersButtons.vehiclePartPicker(
-              title: 'Vehicle Category',
-              parts: vehicleCategory ?? [],
-              initialItem: selectedCategoryId != 0
-                  ? vehicleCategory
-                      ?.where((e) => e.id == selectedCategoryId)
-                      .singleOrNull
-                  : null,
-              onChanged: onChangedVehicleCategory,
-              validator: (value) {
-                if (value == null) {
-                  return 'filedCanNotBeEmptyTxt'.tr;
-                }
-                return null;
-              }),
+          // AppPickersButtons.vehiclePartPicker(
+          //     title: 'Vehicle Category',
+          //     parts: vehicleCategory ?? [],
+          //     initialItem: selectedCategoryId != 0
+          //         ? vehicleCategory
+          //             ?.where((e) => e.id == selectedCategoryId)
+          //             .singleOrNull
+          //         : null,
+          //     onChanged: onChangedVehicleCategory,
+          //     validator: (value) {
+          //       if (value == null) {
+          //         return 'filedCanNotBeEmptyTxt'.tr;
+          //       }
+          //       return null;
+          //     }),
 
-          // Trim
-          AppTextFields.textFieldWithTitle(
-              title: 'Trim',
-              keyboardType: TextInputType.text,
-              controller: trimTextController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'filedCanNotBeEmptyTxt'.tr;
-                }
-                return null;
-              }),
+
 
           // Sales Executive
-          AppPickersButtons.vehiclePartPicker(
-              title: 'Sales Executive',
-              parts: saleExecutive ?? [],
-              initialItem: selectedSaleExecutiveTypeId != 0
-                  ? saleExecutive
-                      ?.where((e) => e.id == selectedSaleExecutiveTypeId)
-                      .singleOrNull
-                  : null,
-              onChanged: (mData) {
-                onChangedSaleType(mData?.id ?? 0);
-              },
-              validator: (value) {
-                if (value == null) {
-                  return 'filedCanNotBeEmptyTxt'.tr;
-                }
-                return null;
-              }),
+          // AppPickersButtons.vehiclePartPicker(
+          //     title: 'Sales Executive',
+          //     parts: saleExecutive ?? [],
+          //     initialItem: selectedSaleExecutiveTypeId != 0
+          //         ? saleExecutive
+          //             ?.where((e) => e.id == selectedSaleExecutiveTypeId)
+          //             .singleOrNull
+          //         : null,
+          //     onChanged: (mData) {
+          //       onChangedSaleType(mData?.id ?? 0);
+          //     },
+          //     validator: (value) {
+          //       if (value == null) {
+          //         return 'filedCanNotBeEmptyTxt'.tr;
+          //       }
+          //       return null;
+          //     }),
 
           // STARTING BID AMOUNT
-          if (selectedCategoryId == 1)
-            AppTextFields.textFieldWithTitle(
-                keyboardType: TextInputType.number,
-                title: 'Price',
-                hintText: 'Enter Amount',
-                controller: priceTextController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'filedCanNotBeEmptyTxt'.tr;
-                  }
-                  return null;
-                }),
+          // if (selectedCategoryId == 1)
+          //   AppTextFields.textFieldWithTitle(
+          //       keyboardType: TextInputType.number,
+          //       title: 'Price',
+          //       hintText: 'Enter Amount',
+          //       controller: priceTextController,
+          //       validator: (value) {
+          //         if (value == null || value.isEmpty) {
+          //           return 'filedCanNotBeEmptyTxt'.tr;
+          //         }
+          //         return null;
+          //       }),
 
           // Sale Type
           // if (selectedCategoryId == 1)
@@ -447,32 +462,62 @@ class AddVehicleWidgets {
           //         return null;
           //       }),
 
-          // SELLING PRICE
-          if (selectedCategoryId == 2)
-            AppTextFields.textFieldWithTitle(
-                keyboardType: TextInputType.number,
-                title: 'Selling Price',
-                hintText: 'Enter Price',
-                controller: sellingPriceTextController,
-                validator: (value) {
-                  if (value == null) {
-                    return 'filedCanNotBeEmptyTxt'.tr;
-                  }
-                  return null;
-                }),
-
-          // Reserve Price
-          // if (selectedSaleTypeId == 2)
+          // // SELLING PRICE
+          // if (selectedCategoryId == 2)
           //   AppTextFields.textFieldWithTitle(
           //       keyboardType: TextInputType.number,
-          //       title: 'Reserve Price',
-          //       controller: reservePriceTextController,
+          //       title: 'Selling Price',
+          //       hintText: 'Enter Price',
+          //       controller: sellingPriceTextController,
           //       validator: (value) {
-          //         if (value == null || value.isEmpty) {
+          //         if (value == null) {
           //           return 'filedCanNotBeEmptyTxt'.tr;
           //         }
           //         return null;
           //       }),
+
+          // Reserve Price
+          //  if (selectedSaleTypeId == 2)
+          AppTextFields.textFieldWithTitle(
+              keyboardType: TextInputType.number,
+              title: 'Reserve Price',
+              controller: reservePriceTextController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'filedCanNotBeEmptyTxt'.tr;
+                }
+                return null;
+              }),
+
+
+          // KEYS
+          _keysSelectionBtns(
+              selectedValue: hasKeys,
+              onChanged: (value) {
+                onChangeHasKeys?.call(value);
+              }),
+          SizedBox(
+            height: Dimensions.getHeight(10),
+          ),
+          // PLAN
+          _planTypeBtns(
+              selectedValue: plan,
+              onChanged: (value) {
+                onChangePlanType?.call(value);
+              }),
+          SizedBox(
+            height: Dimensions.getHeight(10),
+          ),
+          //PASSING TEST
+          _passingTestBtns(
+              selectedValue: passingTest,
+              onChanged: (value) {
+                onChangePassingTestType?.call(value);
+              }),
+
+          SizedBox(
+            height: Dimensions.getHeight(10),
+          ),
 
           // Vehicle Photos
           AppTexts.mediumText(
@@ -521,7 +566,7 @@ class AddVehicleWidgets {
           ),
 
           SizedBox(
-            height: Dimensions.getHeight(10),
+            height: Dimensions.getHeight(24),
           ),
 
           // DOCUMENT
@@ -603,7 +648,7 @@ class AddVehicleWidgets {
             padding: EdgeInsets.all(Dimensions.getHeight(14)),
             child: AppButtons.btnWithBg(
               onTap: termsAndConditionsAgreed ? onTapSubmit : null,
-              text: isEditVehicle ? 'Edit' : 'Submit',
+              text: isEditVehicle ? 'Update' : 'Submit',
               radius: Dimensions.getWidth(100),
               bgColor: termsAndConditionsAgreed
                   ? AppColors.primaryColor
@@ -641,24 +686,29 @@ Widget _keysSelectionBtns(
         children: [
           Row(
             children: [
-              AppTexts.smallText(text: 'Yes'),
+
               AppButtons.radioButton(
                   value: MVehicleHasKeys.yes,
                   selectedValue: selectedValue,
                   onChanged: (value) {
                     onChanged?.call(value);
                   }),
+              AppTexts.smallText(text: 'Yes'),
             ],
+          ),
+          SizedBox(
+            width: Dimensions.getWidth(12),
           ),
           Row(
             children: [
-              AppTexts.smallText(text: 'No'),
               AppButtons.radioButton(
                   value: MVehicleHasKeys.no,
                   selectedValue: selectedValue,
                   onChanged: (value) {
                     onChanged?.call(value);
                   }),
+              AppTexts.smallText(text: 'No'),
+
             ],
           ),
         ],
@@ -710,6 +760,174 @@ Widget _documentTypeBtns(
                   onChanged: (value) {
                     onChanged?.call(MVehicleDocumentType.hayaza);
                   }),
+            ],
+          ),
+        ],
+      )
+    ],
+  );
+}
+
+Widget _odometerTypeBtns(
+    {bool isRequired = false,
+    required MVehicleOdometerType selectedValue,
+    ValueChanged<MVehicleOdometerType>? onChanged}) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          Flexible(
+              child: AppTexts.mediumText(
+                  text: 'Odometer Type',
+                  color: AppColors.lightFontColor,
+                  fontWeight: FontWeight.bold)),
+          isRequired
+              ? AppTexts.largeText(text: '*', color: AppColors.red)
+              : const SizedBox.shrink()
+        ],
+      ),
+      SizedBox(
+        height: Dimensions.getHeight(12),
+      ),
+      Row(
+        children: [
+          Row(
+            children: [
+
+              AppButtons.radioButton(
+                  value: MVehicleOdometerType.km,
+                  selectedValue: selectedValue,
+                  onChanged: (value) {
+                    onChanged?.call(MVehicleOdometerType.km);
+                  }),
+              AppTexts.smallText(text: 'Kilometer'),
+            ],
+          ),
+          SizedBox(
+            width: Dimensions.getWidth(12),
+          ),
+          Row(
+            children: [
+
+              AppButtons.radioButton(
+                  value: MVehicleOdometerType.mi,
+                  selectedValue: selectedValue,
+                  onChanged: (value) {
+                    onChanged?.call(MVehicleOdometerType.mi);
+                  }),
+              AppTexts.smallText(text: 'Miles'),
+            ],
+          ),
+        ],
+      )
+    ],
+  );
+}
+
+Widget _planTypeBtns(
+    {bool isRequired = false,
+    required MVehiclePlanType selectedValue,
+    ValueChanged<MVehiclePlanType>? onChanged}) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          Flexible(
+              child: AppTexts.mediumText(
+                  text: 'Plan',
+                  color: AppColors.lightFontColor,
+                  fontWeight: FontWeight.bold)),
+          isRequired
+              ? AppTexts.largeText(text: '*', color: AppColors.red)
+              : const SizedBox.shrink()
+        ],
+      ),
+      SizedBox(
+        height: Dimensions.getWidth(12),
+      ),
+      Row(
+        children: [
+          Row(
+            children: [
+              AppButtons.radioButton(
+                  value: MVehiclePlanType.standard,
+                  selectedValue: selectedValue,
+                  onChanged: (value) {
+                    onChanged?.call(MVehiclePlanType.standard);
+                  }),
+              AppTexts.smallText(text: 'Standard'),
+
+            ],
+          ),
+          SizedBox(
+            width: Dimensions.getWidth(12),
+          ),
+          Row(
+            children: [
+              AppButtons.radioButton(
+                  value: MVehiclePlanType.premium,
+                  selectedValue: selectedValue,
+                  onChanged: (value) {
+                    onChanged?.call(MVehiclePlanType.premium);
+                  }),
+              AppTexts.smallText(text: 'Premium'),
+
+            ],
+          ),
+        ],
+      )
+    ],
+  );
+}
+
+Widget _passingTestBtns(
+    {bool isRequired = false,
+    required MVehicleHasKeys selectedValue,
+    ValueChanged<MVehicleHasKeys>? onChanged}) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          Flexible(
+              child: AppTexts.mediumText(
+                  text: 'Passing Test',
+                  color: AppColors.lightFontColor,
+                  fontWeight: FontWeight.bold)),
+          isRequired
+              ? AppTexts.largeText(text: '*', color: AppColors.red)
+              : const SizedBox.shrink()
+        ],
+      ),
+      SizedBox(
+        height: Dimensions.getWidth(12),
+      ),
+      Row(
+        children: [
+          Row(
+            children: [
+
+              AppButtons.radioButton(
+                  value: MVehicleHasKeys.yes,
+                  selectedValue: selectedValue,
+                  onChanged: (value) {
+                    onChanged?.call(MVehicleHasKeys.yes);
+                  }),
+              AppTexts.smallText(text: 'Yes'),
+            ],
+          ),
+          SizedBox(
+            width: Dimensions.getHeight(12),
+          ),
+          Row(
+            children: [
+
+              AppButtons.radioButton(
+                  value: MVehicleHasKeys.no,
+                  selectedValue: selectedValue,
+                  onChanged: (value) {
+                    onChanged?.call(MVehicleHasKeys.no);
+                  }),
+              AppTexts.smallText(text: 'No'),
             ],
           ),
         ],

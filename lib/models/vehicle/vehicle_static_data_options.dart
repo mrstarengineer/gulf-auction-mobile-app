@@ -11,8 +11,8 @@ class VehicleStaticDataOption {
   List<VehiclePartInfo>? highlights;
   List<VehiclePartInfo>? colors;
   List<VehiclePartInfo>? saleTypes;
-  List<VehiclePartInfo>? saleExecutive;
-  List<VehiclePartInfo>? categories;
+  // List<VehiclePartInfo>? saleExecutive;
+  // List<VehiclePartInfo>? categories;
 
   VehicleStaticDataOption(
       {this.bodyStyles,
@@ -27,8 +27,9 @@ class VehicleStaticDataOption {
       this.highlights,
       this.colors,
       this.saleTypes,
-      this.saleExecutive,
-      this.categories});
+      // this.saleExecutive,
+      // this.categories
+      });
 
   VehicleStaticDataOption.fromJson(Map<String, dynamic> json) {
     if (json['body_styles'] != null) {
@@ -103,18 +104,18 @@ class VehicleStaticDataOption {
         saleTypes!.add(VehiclePartInfo.fromJson(v));
       });
     }
-    if (json['sales_executive'] != null) {
-      saleExecutive = <VehiclePartInfo>[];
-      json['sales_executive'].forEach((v) {
-        saleExecutive!.add(VehiclePartInfo.fromJson(v));
-      });
-    }
-    if (json['categories'] != null) {
-      categories = <VehiclePartInfo>[];
-      json['categories'].forEach((v) {
-        categories!.add(VehiclePartInfo.fromJson(v));
-      });
-    }
+    // if (json['sales_executive'] != null) {
+    //   saleExecutive = <VehiclePartInfo>[];
+    //   json['sales_executive'].forEach((v) {
+    //     saleExecutive!.add(VehiclePartInfo.fromJson(v));
+    //   });
+    // }
+    // if (json['categories'] != null) {
+    //   categories = <VehiclePartInfo>[];
+    //   json['categories'].forEach((v) {
+    //     categories!.add(VehiclePartInfo.fromJson(v));
+    //   });
+    // }
   }
 }
 

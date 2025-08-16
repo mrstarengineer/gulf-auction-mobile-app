@@ -186,7 +186,8 @@ Widget _vehicleDetailsBody({
       ),
       _infoField(
         titleLeft: 'Odometer',
-        valueLeft: '${vehicleInfo.odometer ?? 'N/A'}',
+        valueLeft:
+            '${vehicleInfo.odometer ?? 'N/A'} ${vehicleInfo.odometerType ?? ''}',
         titleRight: 'Primary Damage',
         valueRight: vehicleInfo.primaryDamage ?? 'N/A',
       ),
@@ -196,10 +197,15 @@ Widget _vehicleDetailsBody({
         titleRight: 'Secondary Damage',
         valueRight: vehicleInfo.secondaryDamage ?? 'N/A',
       ),
+      _infoField(
+        titleLeft: 'Plan',
+        valueLeft: vehicleInfo.plan ?? 'N/A',
+        titleRight: 'Passing Test',
+        valueRight: vehicleInfo.passingTestName ?? 'N/A',
+      ),
       if (pageType != MSellMyCarOptions.soldVehicle &&
           pageType != MSellMyCarOptions.unsoldVehicle &&
-          pageType != MSellMyCarOptions.returnVehicle
-      )
+          pageType != MSellMyCarOptions.returnVehicle)
         _infoField(
           titleLeft: 'Keys',
           valueLeft: vehicleInfo.keysName ?? 'N/A',
@@ -208,15 +214,13 @@ Widget _vehicleDetailsBody({
         ),
       if (pageType == MSellMyCarOptions.pendingVehicle)
         _infoVccField(
-          titleLeft: 'VCC Document',
+          titleLeft: '${vehicleInfo.documentType??''} Document',
           valueLeft: '${vehicleInfo.vccDocument ?? ''}',
-          titleRight: 'Start Bid Amount',
-          valueRight: '${vehicleInfo.startBidAmount ?? 'N/A'}',
+          titleRight: 'Reserve Price',
+          valueRight: '${vehicleInfo.reserveAmount ?? 'N/A'}',
           onTapVccDoc: onTapVccDoc,
         ),
-
-
-      if (pageType != MSellMyCarOptions.soldVehicle)
+      if (pageType != MSellMyCarOptions.soldVehicle && pageType != MSellMyCarOptions.pendingVehicle)
         _infoField(
           titleLeft: 'Sale Type',
           valueLeft: vehicleInfo.saleTypeName ?? 'N/A',
@@ -236,8 +240,8 @@ Widget _vehicleDetailsBody({
           titleRight: 'Start Bid Amount',
           valueRight: '${vehicleInfo.startBidAmount ?? 'N/A'}',
         ),
-
-      if (pageType == MSellMyCarOptions.sellingApprovalVehicle || pageType == MSellMyCarOptions.returnVehicle )
+      if (pageType == MSellMyCarOptions.sellingApprovalVehicle ||
+          pageType == MSellMyCarOptions.returnVehicle)
         _infoFullField(
           titleLeft: 'Start Bid Amount',
           valueLeft: '${vehicleInfo.startBidAmount ?? 'N/A'}',

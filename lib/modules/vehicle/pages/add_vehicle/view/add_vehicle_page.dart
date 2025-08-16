@@ -36,9 +36,9 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
             child: Padding(
               padding: EdgeInsets.all(Dimensions.getHeight(14)),
               child: AddVehicleWidgets.body(context,
-                  onChangedSaleType: (id) {
-                    addVehicleController.setSelectedSaleExecutiveId = id;
-                  },
+                  // onChangedSaleType: (id) {
+                  //   addVehicleController.setSelectedSaleExecutiveId = id;
+                  // },
                   formKey: formKey,
                   isEditVehicle: editVehicleInfoData != null,
                   hasKeys: addVehicleController.hasKeys,
@@ -47,8 +47,8 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                       addVehicleController.sellingPriceTextController,
                   vinTextController: addVehicleController.vinTextController,
                   yearTextController: addVehicleController.yearTextController,
-                  // reservePriceTextController:
-                  //     addVehicleController.reservePriceTextController,
+                  reservePriceTextController:
+                      addVehicleController.reservePriceTextController,
                   odometerTextController:
                       addVehicleController.odometerTextController,
                   trimTextController: addVehicleController.trimTextController,
@@ -59,10 +59,10 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                   makes: addVehicleController.make,
                   // saleTypes:
                   //     addVehicleController.vehicleStaticDataOptions?.saleTypes,
-                  saleExecutive: addVehicleController
-                      .vehicleStaticDataOptions?.saleExecutive,
-                  selectedSaleExecutiveTypeId:
-                      addVehicleController.selectedSaleExecutiveId,
+                  // saleExecutive: addVehicleController
+                  //     .vehicleStaticDataOptions?.saleExecutive,
+                  // selectedSaleExecutiveTypeId:
+                  //     addVehicleController.selectedSaleExecutiveId,
                   models: addVehicleController.models,
                   bodyStyles:
                       addVehicleController.vehicleStaticDataOptions?.bodyStyles,
@@ -74,8 +74,8 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                       .vehicleStaticDataOptions?.driveTrains,
                   transmission: addVehicleController
                       .vehicleStaticDataOptions?.transmission,
-                  cylinder:
-                      addVehicleController.vehicleStaticDataOptions?.cylinders,
+                  // cylinder:
+                      // addVehicleController.vehicleStaticDataOptions?.cylinders,
                   primaryDamage:
                       addVehicleController.vehicleStaticDataOptions?.damages,
                   secondaryDamage:
@@ -85,8 +85,8 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                       .vehicleStaticDataOptions?.mileageType,
                   highlight:
                       addVehicleController.vehicleStaticDataOptions?.highlights,
-                  vehicleCategory:
-                      addVehicleController.vehicleStaticDataOptions?.categories,
+                  // vehicleCategory:
+                  //     addVehicleController.vehicleStaticDataOptions?.categories,
                   vehiclePhotos: addVehicleController.vehiclePhotos,
                   documentPhoto: addVehicleController.vccDocument,
                   selectedMakeId: addVehicleController.selectedMake,
@@ -97,7 +97,7 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                   selectedDriveTrainId: addVehicleController.selectedDriveTrain,
                   selectedTransmissionId:
                       addVehicleController.selectedTransmission,
-                  selectedCylinderId: addVehicleController.selectedCylinder,
+                  // selectedCylinderId: addVehicleController.selectedCylinder,
                   selectedPrimaryDamageId:
                       addVehicleController.selectedPrimaryDamage,
                   selectedSecondaryDamageId:
@@ -109,8 +109,20 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                   selectedCategoryId: addVehicleController.selectedCategory,
                   selectedSaleTypeId: addVehicleController.selectedSaleType,
                   documentType: addVehicleController.documentType,
+                  odometerType: addVehicleController.odometerType,
+                  plan: addVehicleController.plan,
+                  passingTest: addVehicleController.passingTest,
                   onChangeDocumentType: (value) {
                     addVehicleController.documentType = value;
+                  },
+                  onChangeOdometerType: (value) {
+                    addVehicleController.odometerType = value;
+                  },
+                  onChangePlanType: (value) {
+                    addVehicleController.plan = value;
+                  },
+                  onChangePassingTestType: (value) {
+                    addVehicleController.passingTest = value;
                   },
                   onChangeHasKeys: (value) {
                     addVehicleController.hasKeys = value;
@@ -140,10 +152,10 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                     addVehicleController.selectedTransmission =
                         transmission?.id ?? 0;
                   },
-                  onChangedCylinder: (transmission) {
-                    addVehicleController.selectedCylinder =
-                        transmission?.id ?? 0;
-                  },
+                  // onChangedCylinder: (transmission) {
+                  //   addVehicleController.selectedCylinder =
+                  //       transmission?.id ?? 0;
+                  // },
                   onChangedPrimaryDamage: (damage) {
                     addVehicleController.selectedPrimaryDamage =
                         damage?.id ?? 0;
@@ -163,7 +175,7 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                     addVehicleController.selectedHighlight =
                         highlights?.id ?? 0;
                   },
-                  onChangedSaleExecutiveType: (salesExecutive) {},
+                  // onChangedSaleExecutiveType: (salesExecutive) {},
                   onChangedVehicleCategory: (category) {
                     // if (category?.id == 2) {
                     //   addVehicleController.reservePriceTextController.clear();

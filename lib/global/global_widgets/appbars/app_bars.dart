@@ -9,9 +9,25 @@ class AppBars {
   AppBars._();
 
   static PreferredSizeWidget appBar(
-      {VoidCallback? onTapBack, required String title, bool isHome = true}) {
+      {VoidCallback? onTapBack,
+      VoidCallback? onEditPressed,
+      required String title,
+      bool isHome = true,
+      bool isEdit = false}) {
     return AppBar(
       actions: [
+        if (isEdit)
+          AppButtons.circleButtonStrokeOnly(
+            onTap: onEditPressed,
+            icon: Icons.edit,
+            color: AppColors.white,
+            strokeColor: AppColors.white,
+            iconSize: Dimensions.getHeight(18),
+          ),
+        if (isEdit)
+          SizedBox(
+            width: Dimensions.getWidth(8),
+          ),
         if (isHome)
           AppButtons.circleButtonStrokeOnly(
             onTap: () {

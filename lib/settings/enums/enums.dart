@@ -4,6 +4,10 @@ enum MVehicleHasKeys { yes, no }
 
 enum MVehicleDocumentType { vcc, hayaza }
 
+enum MVehiclePlanType { premium, standard }
+
+enum MVehicleOdometerType { mi, km }
+
 enum MSelectedView { list, grid }
 
 enum MSortOptions { priceLowToHigh, priceHighToLow, none }
