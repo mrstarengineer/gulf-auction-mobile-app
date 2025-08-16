@@ -339,7 +339,6 @@ class AddVehicleWidgets {
 
           // ODOMETER TYPE
 
-
           // Color
           AppPickersButtons.vehiclePartPicker(
               title: 'Color',
@@ -371,9 +370,6 @@ class AddVehicleWidgets {
                 }
                 return null;
               }),
-
-
-
 
           // Highlight
           AppPickersButtons.vehiclePartPicker(
@@ -408,8 +404,6 @@ class AddVehicleWidgets {
           //       }
           //       return null;
           //     }),
-
-
 
           // Sales Executive
           // AppPickersButtons.vehiclePartPicker(
@@ -488,7 +482,6 @@ class AddVehicleWidgets {
                 }
                 return null;
               }),
-
 
           // KEYS
           _keysSelectionBtns(
@@ -686,7 +679,6 @@ Widget _keysSelectionBtns(
         children: [
           Row(
             children: [
-
               AppButtons.radioButton(
                   value: MVehicleHasKeys.yes,
                   selectedValue: selectedValue,
@@ -708,7 +700,6 @@ Widget _keysSelectionBtns(
                     onChanged?.call(value);
                   }),
               AppTexts.smallText(text: 'No'),
-
             ],
           ),
         ],
@@ -742,24 +733,27 @@ Widget _documentTypeBtns(
         children: [
           Row(
             children: [
-              AppTexts.smallText(text: 'VCC'),
               AppButtons.radioButton(
                   value: MVehicleDocumentType.vcc,
                   selectedValue: selectedValue,
                   onChanged: (value) {
                     onChanged?.call(MVehicleDocumentType.vcc);
                   }),
+              AppTexts.smallText(text: 'VCC'),
             ],
+          ),
+          SizedBox(
+            width: Dimensions.getWidth(12),
           ),
           Row(
             children: [
-              AppTexts.smallText(text: 'Hayaza / Mulkiya'),
               AppButtons.radioButton(
                   value: MVehicleDocumentType.hayaza,
                   selectedValue: selectedValue,
                   onChanged: (value) {
                     onChanged?.call(MVehicleDocumentType.hayaza);
                   }),
+              AppTexts.smallText(text: 'Hayaza / Mulkiya'),
             ],
           ),
         ],
@@ -793,7 +787,6 @@ Widget _odometerTypeBtns(
         children: [
           Row(
             children: [
-
               AppButtons.radioButton(
                   value: MVehicleOdometerType.km,
                   selectedValue: selectedValue,
@@ -808,7 +801,6 @@ Widget _odometerTypeBtns(
           ),
           Row(
             children: [
-
               AppButtons.radioButton(
                   value: MVehicleOdometerType.mi,
                   selectedValue: selectedValue,
@@ -856,7 +848,6 @@ Widget _planTypeBtns(
                     onChanged?.call(MVehiclePlanType.standard);
                   }),
               AppTexts.smallText(text: 'Standard'),
-
             ],
           ),
           SizedBox(
@@ -871,7 +862,6 @@ Widget _planTypeBtns(
                     onChanged?.call(MVehiclePlanType.premium);
                   }),
               AppTexts.smallText(text: 'Premium'),
-
             ],
           ),
         ],
@@ -905,7 +895,6 @@ Widget _passingTestBtns(
         children: [
           Row(
             children: [
-
               AppButtons.radioButton(
                   value: MVehicleHasKeys.yes,
                   selectedValue: selectedValue,
@@ -920,7 +909,6 @@ Widget _passingTestBtns(
           ),
           Row(
             children: [
-
               AppButtons.radioButton(
                   value: MVehicleHasKeys.no,
                   selectedValue: selectedValue,

@@ -275,7 +275,7 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                                   .fetchVehicles(
                                       pageType: MSellMyCarOptions.allVehicle);
                               context.hideLoaderOverlay;
-                              Get.back();
+                              Get.back(result: 'OK');
                             } else {
                               context.hideLoaderOverlay;
                             }

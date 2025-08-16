@@ -214,13 +214,15 @@ Widget _vehicleDetailsBody({
         ),
       if (pageType == MSellMyCarOptions.pendingVehicle)
         _infoVccField(
-          titleLeft: '${vehicleInfo.documentType??''} Document',
+          titleLeft:
+              vehicleInfo.documentType == 'Vcc' ? 'Vcc' : 'Hayaza / Mulkiya',
           valueLeft: '${vehicleInfo.vccDocument ?? ''}',
           titleRight: 'Reserve Price',
           valueRight: '${vehicleInfo.reserveAmount ?? 'N/A'}',
           onTapVccDoc: onTapVccDoc,
         ),
-      if (pageType != MSellMyCarOptions.soldVehicle && pageType != MSellMyCarOptions.pendingVehicle)
+      if (pageType != MSellMyCarOptions.soldVehicle &&
+          pageType != MSellMyCarOptions.pendingVehicle)
         _infoField(
           titleLeft: 'Sale Type',
           valueLeft: vehicleInfo.saleTypeName ?? 'N/A',

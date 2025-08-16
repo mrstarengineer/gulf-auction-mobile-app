@@ -44,9 +44,12 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
       appBar: AppBars.appBar(
           title: vehicleTitle == 'null' ? 'Vehicle Details' : vehicleTitle,
           isEdit: _pageType == MSellMyCarOptions.pendingVehicle,
-          onEditPressed: () {
-            Get.toNamed(AppRoutes.addVehicle,
+          onEditPressed: () async {
+            final isEdit = await Get.toNamed(AppRoutes.addVehicle,
                 arguments: _sellMyCarController.singleVehicleInfo);
+            if (isEdit != null && isEdit.toString() == 'OK') {
+              _initialApiCalls();
+            }
           }),
       body: Obx(() {
         final vehicleInfo = _sellMyCarController.singleVehicleInfo;
