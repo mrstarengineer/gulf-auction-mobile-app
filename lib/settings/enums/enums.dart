@@ -87,7 +87,7 @@ enum MPaymentOptions {
   bookedPaymentHistory
 }
 
-enum MMoreOptions { downloads, career, contact }
+enum MMoreOptions { downloads, career, contact,buyNow }
 
 enum MFilterOptions {
   newlyAddedVehicles,

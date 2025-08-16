@@ -68,6 +68,7 @@ class AppSvgIcons {
   static String lotsWon = 'assets/icons/svg/lots_won.svg';
   static String lotsLoss = 'assets/icons/svg/lots_loss.svg';
   static String vehiclesOnApproval = 'assets/icons/svg/vehicle_on_approval.svg';
+  static String homeCar = 'assets/icons/svg/home_car.svg';
   // AUCTIONS
   static String todaysAuction = 'assets/icons/svg/todays_auction.svg';
   static String joinAuction = 'assets/icons/svg/join_auction.svg';

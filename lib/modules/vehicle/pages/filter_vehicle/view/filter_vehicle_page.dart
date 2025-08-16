@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gulf_car_auction/core/core.dart';
-import 'package:gulf_car_auction/modules/dashboard/pages/buy_now_vehicles/buy_now_vehicle.dart';
 import 'package:gulf_car_auction/modules/dashboard/pages/home/home.dart';
 import 'package:gulf_car_auction/modules/vehicle/pages/all_vehicles/all_vehicles.dart';
 import 'package:gulf_car_auction/modules/vehicle/pages/filter_vehicle/filter_vehicle.dart';
@@ -9,6 +8,7 @@ import 'package:gulf_car_auction/utils/utils.dart';
 
 import '../../../../../global/global.dart';
 import '../../../../../settings/settings.dart';
+import '../../../../buy_now_vehicles_copy/controller/buy_now_vehicle_controller.dart';
 
 class FilterVehiclePage extends StatelessWidget {
   const FilterVehiclePage({super.key});

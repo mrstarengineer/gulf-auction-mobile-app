@@ -33,7 +33,7 @@ class DashboardWidgets {
             Padding(
               padding: EdgeInsets.only(top: Dimensions.getHeight(40)),
               child: AppTexts.extraSmallText(text: 'Add Vehicle', color: AppColors.baseColor)),
-            _navBarItemCard(svgIconPath: AppSvgIcons.menuName, title: 'Buy Now', isSelected: currentIndex == 2, onTap: () => onScreenSelected.call(2)),
+            _navBarItemCard(svgIconPath: AppSvgIcons.homeCar, title: 'All Vehicles', isSelected: currentIndex == 2, onTap: () => onScreenSelected.call(2)),
 
             _navBarItemCard(svgIconPath: AppSvgIcons.menu, title: 'More', isSelected: currentIndex == 3, onTap: () => onScreenSelected.call(3)),
           ],

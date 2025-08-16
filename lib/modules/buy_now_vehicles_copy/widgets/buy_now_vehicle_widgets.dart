@@ -12,18 +12,18 @@ import 'package:gulf_car_auction/utils/utils.dart';
 class BuyNowVehicleWidgets {
   BuyNowVehicleWidgets._();
 
-  static PreferredSizeWidget appBar({VoidCallback? onTapBack}) {
-    return AppBar(
-      leadingWidth: Dimensions.getHeight(65),
-      leading: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Dimensions.getWidth(15)),
-        child: AppButtons.circleButtonStrokeOnly(
-            onTap: onTapBack,
-            svgIconPath: AppSvgIcons.arrowLeft,
-            iconSize: Dimensions.getHeight(18)),
-      ),
-    );
-  }
+  // static PreferredSizeWidget appBar({VoidCallback? onTapBack}) {
+  //   return AppBar(
+  //     leadingWidth: Dimensions.getHeight(65),
+  //     leading: Padding(
+  //       padding: EdgeInsets.symmetric(horizontal: Dimensions.getWidth(15)),
+  //       child: AppButtons.circleButtonStrokeOnly(
+  //           onTap: onTapBack,
+  //           svgIconPath: AppSvgIcons.arrowLeft,
+  //           iconSize: Dimensions.getHeight(18)),
+  //     ),
+  //   );
+  // }
 
   static Widget header({
     TextEditingController? searchTextController,

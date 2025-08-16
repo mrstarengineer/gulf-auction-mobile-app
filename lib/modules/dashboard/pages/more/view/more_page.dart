@@ -7,6 +7,8 @@ import 'package:gulf_car_auction/preference/preference.dart';
 import 'package:gulf_car_auction/routes/routes.dart';
 import 'package:gulf_car_auction/settings/settings.dart';
 
+import '../../../../buy_now_vehicles_copy/view/buy_now_vehicle_page.dart';
+
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
 
@@ -221,6 +223,8 @@ class _MorePageState extends State<MorePage> {
                         } else if (optionName == MMoreOptions.contact) {
                           //   CALLING CONTACT
                           Get.toNamed(AppRoutes.contact);
+                        } else if (optionName == MMoreOptions.buyNow) {
+                          Get.to(() => const BuyNowVehiclePage());
                         }
                       }),
                     ),

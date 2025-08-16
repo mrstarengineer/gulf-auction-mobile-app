@@ -81,6 +81,7 @@ class MorePageOptions {
   ];
 
   static List<MorePageOptions> moreOptions = [
+    MorePageOptions(AppSvgIcons.car, 'Buy Now', MMoreOptions.buyNow),
     MorePageOptions(AppSvgIcons.menuName, 'Downloads', MMoreOptions.downloads),
     MorePageOptions(AppSvgIcons.menuName, 'Career', MMoreOptions.career),
     MorePageOptions(AppSvgIcons.menuName, 'Contact', MMoreOptions.contact),

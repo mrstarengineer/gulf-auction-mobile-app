@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gulf_car_auction/helper/helper.dart';
 import 'package:gulf_car_auction/models/models.dart';
-import 'package:gulf_car_auction/modules/dashboard/pages/buy_now_vehicles/buy_now_vehicle.dart';
 
 import '../../../../../network/network.dart';
 import '../../../../../settings/settings.dart';
+import '../repository/all_vehicle_repository.dart';
 
-class BuyNowVehicleController extends GetxController {
-  final BuyNowVehicleRepository _repo;
+class AllVehicleController extends GetxController {
+  final AllVehicleRepository _repo;
 
-  BuyNowVehicleController({required BuyNowVehicleRepository repo})
+  AllVehicleController({required AllVehicleRepository repo})
       : _repo = repo;
 
   late TextEditingController searchTextController;
@@ -102,7 +102,7 @@ class BuyNowVehicleController extends GetxController {
     }
   }
 
-  Future<ApiResponseModel> fetchBuyNowVehicles(
+  Future<ApiResponseModel> fetchAllVehicles(
       {String pageNo = '1',
       String limit = '10',
       bool loadingInitial = false,
@@ -122,7 +122,7 @@ class BuyNowVehicleController extends GetxController {
       var searchParam =
           'vehicle_global_search=${searchTextController.text.trim()}&${searchParams ?? ''}';
 
-      final response = await _repo.fetchBuyNowVehicles(
+      final response = await _repo.fetchAllVehicles(
           limit: limit, pageNo: pageNo, searchParams: searchParam);
 
       final apiResponseHandler = ApiResponseHandler(
@@ -176,7 +176,7 @@ class BuyNowVehicleController extends GetxController {
     int nextPage = int.parse(buyNowVehiclesCurrentPageNo) + 1;
     buyNowVehiclesCurrentPageNo = nextPage.toString();
 
-    await fetchBuyNowVehicles(
+    await fetchAllVehicles(
         pageNo: buyNowVehiclesCurrentPageNo,
         loadingPagination: true,
         searchParams: searchParams);

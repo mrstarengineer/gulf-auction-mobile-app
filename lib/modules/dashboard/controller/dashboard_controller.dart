@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:gulf_car_auction/modules/dashboard/dashboard.dart';
-import 'package:gulf_car_auction/modules/dashboard/pages/buy_now_vehicles/view/buy_now_vehicle_page.dart';
+import 'package:gulf_car_auction/modules/dashboard/pages/all_vehicles/view/all_vehicle_page.dart';
 import 'package:gulf_car_auction/modules/dashboard/pages/home/home.dart';
 import 'package:gulf_car_auction/modules/dashboard/pages/join_auction/join_auction.dart';
 import 'package:gulf_car_auction/modules/dashboard/pages/more/more.dart';
@@ -19,7 +19,7 @@ class DashboardController extends GetxController {
   final screens = [
     const HomePage(),
     const JoinAuctionPage(),
-    const BuyNowVehiclePage(),
+    const AllVehiclePage(),
     const MorePage()
   ];
 }
