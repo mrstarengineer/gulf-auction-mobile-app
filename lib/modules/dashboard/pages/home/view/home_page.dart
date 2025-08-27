@@ -42,7 +42,6 @@ class _HomePageState extends State<HomePage> {
     _homeController.fetchFilterVehicleOptions();
     _homeController.fetchAuctionVehicles(loadingAuctionVehicle: true);
     _homeController.fetchUpcomingAuctions();
-    // _homeController.fetchBuyNowVehicles();
     if (_isUserLoggedIn) {
       _homeController.fetchMemberDashboard();
     }

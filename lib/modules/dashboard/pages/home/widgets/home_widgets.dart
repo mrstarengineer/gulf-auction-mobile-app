@@ -395,8 +395,8 @@ Widget _topAuctionVehicleHeader({
     children: [
       Expanded(
         child: AppDropdowns.simpleDropdown<String>(
-          title: 'All',
-          items: ['Listed Vehicle', 'Upcoming Auction', 'All'],
+          title: 'Listed Vehicle',
+          items: ['Listed Vehicle', 'Upcoming Auction'],
           selectedItem: selectedType,
           onChanged: onChanged,
         ),

@@ -7,6 +7,8 @@ import 'package:gulf_car_auction/network/api/api.dart';
 import 'package:gulf_car_auction/network/handler/handler.dart';
 import 'package:gulf_car_auction/settings/settings.dart';
 
+import '../../../../../utils/toasts/app_toasts.dart';
+
 class HomeController extends GetxController {
   final HomeRepository _repo;
 
@@ -70,7 +72,7 @@ class HomeController extends GetxController {
   toggleIsSearchFieldVisible() => isSearchFieldVisible = !isSearchFieldVisible;
 
   final _isLoading = false.obs;
-  final _selectedType = 'All'.obs;
+  final _selectedType = 'Listed Vehicle'.obs;
 
   bool get isLoading => _isLoading.value;
 
@@ -187,6 +189,14 @@ class HomeController extends GetxController {
             topAuctionVehiclesCurrentPageNo = '1';
 
             topAuctionVehicles = VehicleInfo.fromJson(responseBody);
+//TODO 2098
+            // 🔹 If "Listed Vehicle" is empty → fallback to "Upcoming Auction"
+            if (selectedType == 'Listed Vehicle' &&
+                (topAuctionVehicles?.data?.isEmpty ?? true)) {
+              AppToasts.shortToast('dd');
+              selectedType = 'Upcoming Auction';
+              fetchAuctionVehicles(loadingInitial: true);
+            }
           } else {
             List<dynamic> dataList = responseBody['data'];
 
@@ -194,6 +204,8 @@ class HomeController extends GetxController {
               topAuctionVehicles?.data?.add(VehicleData.fromJson(dataMap));
             }
           }
+
+
 
           apiResponseModel = ApiResponseModel(isSuccess: true, message: '');
 
