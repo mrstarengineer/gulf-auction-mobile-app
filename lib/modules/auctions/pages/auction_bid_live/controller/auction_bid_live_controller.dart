@@ -30,6 +30,7 @@ class AuctionBidLiveController extends GetxController {
   final _currentUserId = 0.obs;
   final _storedBidAmount = 0.obs;
   final _bidButtonEnable = true.obs;
+  final _isAuctionStarted = false.obs;
   final _auctionMessage = ''.obs;
   final _soldOutMessage = ''.obs;
   final _mColor = AppColors.bidStartCLR.obs;
@@ -54,6 +55,8 @@ class AuctionBidLiveController extends GetxController {
 
   bool get bidButtonEnable => _bidButtonEnable.value;
 
+  bool get isAuctionStarted => _isAuctionStarted.value;
+
   String get auctionMessage => _auctionMessage.value;
 
   String get soldOutMessage => _soldOutMessage.value;
@@ -72,6 +75,8 @@ class AuctionBidLiveController extends GetxController {
   set storedBidAmount(int value) => _storedBidAmount.value = value;
 
   set bidButtonEnable(bool value) => _bidButtonEnable.value = value;
+
+  set isAuctionStarted(bool value) => _isAuctionStarted.value = value;
 
   set mColor(Color value) => _mColor.value = value;
 
@@ -127,6 +132,10 @@ class AuctionBidLiveController extends GetxController {
                 0;
             _currentUserId.value = auctionView.bidDetail?.userId ?? 0;
 
+            if (auctionView.auctionDetail?.status == 7) {
+              isAuctionStarted = true;
+            }
+
             // Set initial myBidAmount if available
             if (auctionView.bidInfo != null) {
               if (auctionView.bidInfo!.nextBidAmount ==
@@ -170,7 +179,9 @@ class AuctionBidLiveController extends GetxController {
       final apiResponseHandler =
           ApiResponseHandler(response, successCallback: (response) {
         var responseBody = json.decode(response.body);
-        if (responseBody is Map<String, dynamic> && responseBody.isNotEmpty) {
+        if (responseBody['data'].toString() != '[]' &&
+            responseBody is Map<String, dynamic> &&
+            responseBody.isNotEmpty) {
           _auctionView.value.upcomingVehicles =
               KUpcomingVehicles.fromJson(responseBody['data']);
           update();
@@ -359,6 +370,9 @@ class AuctionBidLiveController extends GetxController {
 
     switch (eventData.event) {
       case 'READY_TO_BID':
+        if (isAuctionStarted == false) {
+          isAuctionStarted = true;
+        }
         if (eventData.bidInfo != null) {
           _myBidAmount.value = eventData.bidInfo!.nextBidAmount ?? 0;
         }

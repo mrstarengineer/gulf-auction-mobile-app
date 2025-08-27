@@ -118,6 +118,7 @@ class PusherController extends GetxController {
     try {
       if (event.data.toString() != '{}') {
         final auctionController = Get.find<AuctionBidLiveController>();
+        ePrintWrapped(event.toString());
         final eventData = KPusherEventData.fromJson(
             jsonDecode(event.data), _pusherEvent.value);
         _pusherEvent.value = eventData;

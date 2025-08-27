@@ -64,7 +64,9 @@ class AuctionsListWidgets {
                                   ),
                                   Flexible(
                                       child: AppTexts.smallText(
-                                          text: auctionInfo.auctionTime ?? '',
+                                          text: isAuctionLive
+                                              ? auctionInfo.auctionTime ?? ''
+                                              : auctionInfo.auctionAt ?? '',
                                           maxLine: 2))
                                 ],
                               ),

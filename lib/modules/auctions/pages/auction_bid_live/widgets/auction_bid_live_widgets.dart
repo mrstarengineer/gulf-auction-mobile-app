@@ -50,6 +50,7 @@ class AuctionBidLiveWidgets {
   static Widget body({
     bool eligibleForBidding = false,
     bool isBidBtnEnabled = true,
+    bool isAuctionStarted = false,
     VoidCallback? onTapBid,
     VoidCallback? onTapBidIncrement,
     VoidCallback? onTapBidDecrement,
@@ -131,6 +132,7 @@ class AuctionBidLiveWidgets {
                       _bidButton(
                         eligibleForBidding: eligibleForBidding,
                         auctionMessage: auctionMessage,
+                        isAuctionStarted: isAuctionStarted,
                         soldOutMessage: soldOutMessage,
                         currentBidAmount: currentBidAmount,
                         nextBidAmount: nextBidAmount ?? 0,
@@ -315,6 +317,7 @@ Widget _topAuctionVehicleCarPreview({
 Widget _bidButton(
     {bool eligibleForBidding = false,
     bool isBidBtnEnabled = true,
+    bool isAuctionStarted = false,
     Color? bidBgColor,
     String? auctionMessage,
     String? soldOutMessage,
@@ -453,73 +456,158 @@ Widget _bidButton(
           height: Dimensions.getHeight(12),
         ),
         eligibleForBidding
-            ? Column(
-                children: [
-                  Row(
+            ? isAuctionStarted
+                ? Column(
                     children: [
-                      Expanded(
-                          flex: 1,
-                          child: AppButtons.btnWithBg(
-                            onTap: isDecrementEnabled ? onTapMinus : null,
-                            text: '-',
-                            padding: Dimensions.getHeight(4),
-                            bgColor: isDecrementEnabled
-                                ? AppColors.enabledCLR
-                                : AppColors.lightGrey,
-                            textColor: isDecrementEnabled
-                                ? AppColors.white
-                                : AppColors.black,
-                          )),
+                      Row(
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: AppButtons.btnWithBg(
+                                onTap: isDecrementEnabled ? onTapMinus : null,
+                                text: '-',
+                                padding: Dimensions.getHeight(4),
+                                bgColor: isDecrementEnabled
+                                    ? AppColors.enabledCLR
+                                    : AppColors.lightGrey,
+                                textColor: isDecrementEnabled
+                                    ? AppColors.white
+                                    : AppColors.black,
+                              )),
+                          SizedBox(
+                            width: Dimensions.getWidth(12),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: Dimensions.getHeight(4),
+                                  horizontal: Dimensions.getWidth(8)),
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.getHeight(4))),
+                              child: AppTexts.smallText(
+                                  text: nextBidAmount.toString(),
+                                  color: AppColors.baseFontColor),
+                            ),
+                          ),
+                          SizedBox(
+                            width: Dimensions.getWidth(12),
+                          ),
+                          Expanded(
+                              flex: 1,
+                              child: AppButtons.btnWithBg(
+                                  onTap: onTapPlus,
+                                  text: '+',
+                                  padding: Dimensions.getHeight(4),
+                                  bgColor: AppColors.enabledCLR,
+                                  textColor: AppColors.white)),
+                        ],
+                      ),
                       SizedBox(
-                        width: Dimensions.getWidth(12),
+                        height: Dimensions.getHeight(12),
                       ),
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: Dimensions.getHeight(4),
-                              horizontal: Dimensions.getWidth(8)),
-                          decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.getHeight(4))),
-                          child: AppTexts.smallText(
-                              text: nextBidAmount.toString(),
-                              color: AppColors.baseFontColor),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Dimensions.getWidth(12),
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: AppButtons.btnWithBg(
-                              onTap: onTapPlus,
-                              text: '+',
-                              padding: Dimensions.getHeight(4),
-                              bgColor: AppColors.enabledCLR,
-                              textColor: AppColors.white)),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Dimensions.getHeight(12),
-                  ),
-                  AppButtons.btnWithBg(
-                    onTap:
-                        auctionMessage != 'YOU ARE WINNING' && isBidBtnEnabled
+                      AppButtons.btnWithBg(
+                        onTap: auctionMessage != 'YOU ARE WINNING' &&
+                                isBidBtnEnabled
                             ? onTapBid
                             : null,
-                    text: 'BID',
-                    bgColor:
-                        auctionMessage != 'YOU ARE WINNING' && isBidBtnEnabled
+                        text: 'BID',
+                        bgColor: auctionMessage != 'YOU ARE WINNING' &&
+                                isBidBtnEnabled
                             ? AppColors.primaryColor
                             : AppColors.baseColor.withOpacity(0.5),
-                    textColor: isBidBtnEnabled
-                        ? AppColors.white
-                        : AppColors.baseFontColor,
+                        textColor: isBidBtnEnabled
+                            ? AppColors.white
+                            : AppColors.baseFontColor,
+                      ),
+                      if (auctionMessage != 'YOU ARE WINNING' &&
+                          isBidBtnEnabled) ...[
+                        SizedBox(
+                          height: Dimensions.getHeight(12),
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: AppButtons.btnWithBg(
+                                    onTap: () async {
+                                      auctionBidLiveController.myBidAmount =
+                                          nextBidAmount + 500;
+                                      onTapBid?.call();
+                                    },
+                                    text: '1000',
+                                    bgColor: AppColors.primaryColor,
+                                    textColor: AppColors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: Dimensions.getWidth(12),
+                                ),
+                                Expanded(
+                                  child: AppButtons.btnWithBg(
+                                    onTap: () async {
+                                      auctionBidLiveController.myBidAmount =
+                                          nextBidAmount + 1500;
+                                      onTapBid?.call();
+                                    },
+                                    text: '2000',
+                                    bgColor: AppColors.primaryColor,
+                                    textColor: AppColors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Dimensions.getWidth(12),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: AppButtons.btnWithBg(
+                                    onTap: () async {
+                                      auctionBidLiveController.myBidAmount =
+                                          nextBidAmount + 2500;
+                                      onTapBid?.call();
+                                    },
+                                    text: '3000',
+                                    bgColor: AppColors.primaryColor,
+                                    textColor: AppColors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: Dimensions.getWidth(12),
+                                ),
+                                Expanded(
+                                  child: AppButtons.btnWithBg(
+                                    onTap: () async {
+                                      auctionBidLiveController.myBidAmount =
+                                          nextBidAmount + 4500;
+                                      onTapBid?.call();
+                                    },
+                                    text: '5000',
+                                    bgColor: AppColors.primaryColor,
+                                    textColor: AppColors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ],
                   )
-                ],
-              )
+                : AppTexts.smallText(
+                    text: 'Get ready\nstarting shortly',
+                    color: AppColors.primaryColor,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.visible,
+                    fontWeight: FontWeight.bold,
+                  )
             : AppTexts.smallText(
                 text: 'You are not eligible for bidding!',
                 color: AppColors.primaryColor,

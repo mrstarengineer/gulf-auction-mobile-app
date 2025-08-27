@@ -12,10 +12,6 @@ class HomeRepository {
       String pageNo = '1',
       String? searchParams,
       String? type}) async {
-    //TODO 2098
-    // if (type == 'Listed Vehicle') {
-    //   return http.Response("{\"data\": []}",200);
-    // }
     return await _apiClient.getRequest(type == 'Listed Vehicle'
         ? ApiEndpoints.auctionVehicles(
             auctionVehicleType: 1,

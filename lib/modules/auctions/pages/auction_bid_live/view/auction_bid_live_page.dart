@@ -24,7 +24,7 @@ class _AuctionBidLivePageState extends State<AuctionBidLivePage> {
   final _auctionBidLiveController = Get.find<AuctionBidLiveController>();
   final _pusherController = Get.find<PusherController>();
   final _selectedAuctionId =
-  int.parse(Get.parameters['selectedAuctionId'] ?? '0');
+      int.parse(Get.parameters['selectedAuctionId'] ?? '0');
 
   @override
   void initState() {
@@ -54,28 +54,28 @@ class _AuctionBidLivePageState extends State<AuctionBidLivePage> {
         }
         AppDialogs.closingConfirmation(context, title: 'Leave Auction?',
             onTapBtn2: () {
-              Get.back();
-              Get.back();
-            });
+          Get.back();
+          Get.back();
+        });
       },
       child: Scaffold(
         appBar: AppBars.appBarWithAction(
           isConfirmationRequired: true,
           action: Obx(() => AppButtons.iconButton(
-            onTap: () => _pusherController.isNotificationOn =
-            !_pusherController.isNotificationOn,
-            icon: _pusherController.isNotificationOn
-                ? Icons.notifications_on_rounded
-                : Icons.notifications_off_rounded,
-          )),
-          title: _auctionBidLiveController.auctionView.auctionDetail?.title ??
-              '',
+                onTap: () => _pusherController.isNotificationOn =
+                    !_pusherController.isNotificationOn,
+                icon: _pusherController.isNotificationOn
+                    ? Icons.notifications_on_rounded
+                    : Icons.notifications_off_rounded,
+              )),
+          title:
+              _auctionBidLiveController.auctionView.auctionDetail?.title ?? '',
           onTapBack: () {
             AppDialogs.closingConfirmation(context, title: 'Leave Auction?',
                 onTapBtn2: () {
-                  Get.back();
-                  Get.back();
-                });
+              Get.back();
+              Get.back();
+            });
           },
         ),
         body: Obx(() {
@@ -85,31 +85,31 @@ class _AuctionBidLivePageState extends State<AuctionBidLivePage> {
 
           if (_pusherController.pusherEvent.auctionFinished ?? false) {
             return AuctionBidLiveWidgets.auctionEndedBody(
-              title: _auctionBidLiveController
-                  .auctionView.auctionDetail?.title ??
-                  '',
+              title:
+                  _auctionBidLiveController.auctionView.auctionDetail?.title ??
+                      '',
             );
           }
 
           return Column(
             children: [
               Obx(
-                    () => AuctionBidLiveWidgets.header(
+                () => AuctionBidLiveWidgets.header(
                   photoTap: (selectedIndex) {
                     Get.to(() => FilesGalleryPreviewPage(
                         vehicleList: _auctionBidLiveController
-                            .auctionView.vehicleDetail?.vehicleImages ??
+                                .auctionView.vehicleDetail?.vehicleImages ??
                             [],
                         selectedIndex: selectedIndex));
                   },
                   images: _auctionBidLiveController
-                      .auctionView.vehicleDetail?.vehicleImages ??
+                          .auctionView.vehicleDetail?.vehicleImages ??
                       [],
                   carouselController: _carouselController,
                   currentIndexCarousalSlider:
-                  _auctionBidLiveController.currentIndexCarousalSlider,
-                  onPageChanged:
-                  _auctionBidLiveController.updateCurrentIndexCarousalSlider,
+                      _auctionBidLiveController.currentIndexCarousalSlider,
+                  onPageChanged: _auctionBidLiveController
+                      .updateCurrentIndexCarousalSlider,
                 ),
               ),
               SizedBox(
@@ -117,39 +117,57 @@ class _AuctionBidLivePageState extends State<AuctionBidLivePage> {
               ),
               Expanded(
                 child: Obx(
-                      () => AuctionBidLiveWidgets.body(
+                  () => AuctionBidLiveWidgets.body(
                     eligibleForBidding: _auctionBidLiveController
-                        .auctionView.vehicleDetail?.eligibleForBidding ??
+                            .auctionView.vehicleDetail?.eligibleForBidding ??
                         true,
-                    currentBidAmount: _auctionBidLiveController.storedBidAmount.toString(),
+                    currentBidAmount:
+                        _auctionBidLiveController.storedBidAmount.toString(),
                     nextBidAmount: _auctionBidLiveController.myBidAmount,
-                    upcomingVehicles: _auctionBidLiveController
-                        .auctionView.upcomingVehicles?.upcomingVehicleDetailList
-                        ?.values,
+                    upcomingVehicles: _auctionBidLiveController.auctionView
+                        .upcomingVehicles?.upcomingVehicleDetailList?.values,
                     bidBgColor: _auctionBidLiveController.mColor,
+                    isAuctionStarted:
+                        _auctionBidLiveController.isAuctionStarted,
                     auctionMessage: _auctionBidLiveController.auctionMessage,
-                        soldOutMessage: _auctionBidLiveController.soldOutMessage,
-                    participants: _pusherController.pusherEvent.totalParticipants,
+                    soldOutMessage: _auctionBidLiveController.soldOutMessage,
+                    participants:
+                        _pusherController.pusherEvent.totalParticipants,
                     carName:
-                    '${_auctionBidLiveController.auctionView.vehicleDetail?.year ?? ''} ${_auctionBidLiveController.auctionView.vehicleDetail?.make ?? ''} ${_auctionBidLiveController.auctionView.vehicleDetail?.model ?? ''}',
-                    vin: _auctionBidLiveController.auctionView.vehicleDetail?.vin,
-                    sequence: _auctionBidLiveController.auctionView.vehicleDetail?.serial,
-                    driveTrain: _auctionBidLiveController.auctionView.vehicleDetail?.drive,
+                        '${_auctionBidLiveController.auctionView.vehicleDetail?.year ?? ''} ${_auctionBidLiveController.auctionView.vehicleDetail?.make ?? ''} ${_auctionBidLiveController.auctionView.vehicleDetail?.model ?? ''}',
+                    vin: _auctionBidLiveController
+                        .auctionView.vehicleDetail?.vin,
+                    sequence: _auctionBidLiveController
+                        .auctionView.vehicleDetail?.serial,
+                    driveTrain: _auctionBidLiveController
+                        .auctionView.vehicleDetail?.drive,
                     odometer:
-                    '${_auctionBidLiveController.auctionView.vehicleDetail?.odometer ?? 0} ${_auctionBidLiveController.auctionView.vehicleDetail?.odometerType}',
-                    bodyStyle: _auctionBidLiveController.auctionView.vehicleDetail?.bodyStyle,
-                    color: _auctionBidLiveController.auctionView.vehicleDetail?.color,
-                    primaryDamage: _auctionBidLiveController.auctionView.vehicleDetail?.primaryDamage,
-                    engineType: _auctionBidLiveController.auctionView.vehicleDetail?.engineType,
-                    documentType: _auctionBidLiveController.auctionView.vehicleDetail?.documentType,
-                    onTapBidIncrement: () => _auctionBidLiveController.calculateBidIncrement(
-                        bidIncrementValue: _auctionBidLiveController.auctionView.bidInfo?.bidIncrement ?? 0),
-                    onTapBidDecrement: () => _auctionBidLiveController.calculateBidDecrement(
-                        bidIncrementValue: _auctionBidLiveController.auctionView.bidInfo?.bidIncrement ?? 0),
+                        '${_auctionBidLiveController.auctionView.vehicleDetail?.odometer ?? 0} ${_auctionBidLiveController.auctionView.vehicleDetail?.odometerType}',
+                    bodyStyle: _auctionBidLiveController
+                        .auctionView.vehicleDetail?.bodyStyle,
+                    color: _auctionBidLiveController
+                        .auctionView.vehicleDetail?.color,
+                    primaryDamage: _auctionBidLiveController
+                        .auctionView.vehicleDetail?.primaryDamage,
+                    engineType: _auctionBidLiveController
+                        .auctionView.vehicleDetail?.engineType,
+                    documentType: _auctionBidLiveController
+                        .auctionView.vehicleDetail?.documentType,
+                    onTapBidIncrement: () =>
+                        _auctionBidLiveController.calculateBidIncrement(
+                            bidIncrementValue: _auctionBidLiveController
+                                    .auctionView.bidInfo?.bidIncrement ??
+                                0),
+                    onTapBidDecrement: () =>
+                        _auctionBidLiveController.calculateBidDecrement(
+                            bidIncrementValue: _auctionBidLiveController
+                                    .auctionView.bidInfo?.bidIncrement ??
+                                0),
                     isBidBtnEnabled: _auctionBidLiveController.bidButtonEnable,
                     onTapBid: () async {
                       context.showLoaderOverlay;
-                      final response = await _auctionBidLiveController.newBidAPI(context, isBidForYou: false);
+                      final response = await _auctionBidLiveController
+                          .newBidAPI(context, isBidForYou: false);
                       context.hideLoaderOverlay;
                       if (!response.isSuccess) {
                         AppToasts.shortToast(response.message);
