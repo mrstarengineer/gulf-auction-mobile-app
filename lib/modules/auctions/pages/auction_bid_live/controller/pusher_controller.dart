@@ -60,7 +60,7 @@ class PusherController extends GetxController {
   @override
   void onClose() {
     _timer?.cancel();
-    _audioPlayer.dispose();
+    // _audioPlayer.dispose();
     super.onClose();
   }
 

@@ -5,6 +5,7 @@ abstract class Environment {
   static String get fileName {
     if (kReleaseMode) {
       return 'env.production';
+
     } else {
       return 'env.dev';
     }
