@@ -62,10 +62,12 @@ class KAuctionDetail {
 class MBidDetail {
   int? userId;
   int? amount;
+  String? username;
 
   MBidDetail.fromJson(Map<String, dynamic> json) {
     amount = json['amount'] ?? 0;
     userId = json['user_id'] ?? 0;
+    username = json['username'] ?? '';
   }
 }
 
@@ -248,6 +250,7 @@ class BidInfo {
 class BidDetail {
   String? country;
   String? flag;
+  String? bidType;
   dynamic amount;
   int? userId;
   List<PreviousBids>? previousBids;
@@ -255,6 +258,7 @@ class BidDetail {
   BidDetail.fromJson(Map<String, dynamic> json) {
     country = json['country'];
     flag = json['flag'];
+    bidType = json['bid_type'];
     amount = json['amount'];
     userId = json['user_id'];
     if (json['previous_bids'] != null) {
@@ -277,5 +281,3 @@ class PreviousBids {
     amount = json['amount'];
   }
 }
-
-

@@ -60,6 +60,7 @@ class AuctionBidLiveWidgets {
     Color? bidBgColor,
     String? auctionMessage,
     String? soldOutMessage,
+    required String auctionType,
     String? participants,
     String? carName,
     String? vin,
@@ -134,6 +135,7 @@ class AuctionBidLiveWidgets {
                         auctionMessage: auctionMessage,
                         isAuctionStarted: isAuctionStarted,
                         soldOutMessage: soldOutMessage,
+                        auctionType: auctionType,
                         currentBidAmount: currentBidAmount,
                         nextBidAmount: nextBidAmount ?? 0,
                         onTapPlus: onTapBidIncrement,
@@ -319,6 +321,7 @@ Widget _bidButton(
     bool isBidBtnEnabled = true,
     bool isAuctionStarted = false,
     Color? bidBgColor,
+    required String auctionType,
     String? auctionMessage,
     String? soldOutMessage,
     String? currentBidAmount,
@@ -340,6 +343,11 @@ Widget _bidButton(
             borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
         child: Column(
           children: [
+            if (auctionType.isNotEmpty)
+              AppTexts.mediumText(text: auctionType.toUpperCase()),
+            const SizedBox(
+              height: 4,
+            ),
             const Icon(
               Icons.close,
               color: Colors.red,
@@ -368,6 +376,11 @@ Widget _bidButton(
             borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
         child: Column(
           children: [
+            if (auctionType.isNotEmpty)
+              AppTexts.mediumText(text: auctionType.toUpperCase()),
+            const SizedBox(
+              height: 4,
+            ),
             const Icon(
               Icons.face,
               color: Colors.black,
@@ -396,6 +409,11 @@ Widget _bidButton(
             borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
         child: Column(
           children: [
+            if (auctionType.isNotEmpty)
+              AppTexts.mediumText(text: auctionType.toUpperCase()),
+            const SizedBox(
+              height: 4,
+            ),
             const Icon(
               Icons.check_circle,
               color: Colors.green,
@@ -416,6 +434,7 @@ Widget _bidButton(
       );
     }
   }
+
   return Container(
     alignment: Alignment.center,
     width: double.maxFinite,
@@ -425,6 +444,11 @@ Widget _bidButton(
         borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
     child: Column(
       children: [
+        if (auctionType.isNotEmpty)
+          AppTexts.mediumText(text: auctionType.toUpperCase()),
+        const SizedBox(
+          height: 4,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -124,6 +124,30 @@ class AuctionBidLiveController extends GetxController {
           _auctionView.value = KAuctionView.fromJson(responseBody);
 
           // Update initial state from API
+
+          if (auctionView.bidDetail != null &&
+              auctionView.bidDetail!.username != null) {
+            if (_preferenceController.getInt(PrefsKeys.userId) ==
+                auctionView.bidDetail!.userId) {
+              _auctionView.value.auctionDetail?.auctionType =
+                  'your bid (online)';
+            } else {
+              if (auctionView.bidDetail!.username?.toLowerCase() == 'on_site') {
+                _auctionView.value.auctionDetail?.auctionType = 'onsite';
+              } else {
+                _auctionView.value.auctionDetail?.auctionType = 'online';
+              }
+            }
+          } else {
+            if (auctionView.bidDetail != null &&
+                auctionView.bidDetail!.userId != null) {
+              if (_preferenceController.getInt(PrefsKeys.userId) ==
+                  auctionView.bidDetail!.userId) {
+                _auctionView.value.auctionDetail?.auctionType =
+                    'your bid (online)';
+              }
+            }
+          }
           if (auctionView.auctionDetail != null) {
             _reserveAmount.value =
                 auctionView.vehicleDetail?.reserveAmount ?? 0;
@@ -367,6 +391,27 @@ class AuctionBidLiveController extends GetxController {
     }
 
     _soldOutMessage.value = '';
+    if (eventData.bidDetail != null &&
+        eventData.bidDetail!.bidType != null &&
+        eventData.bidDetail!.bidType!.isNotEmpty) {
+      if (eventData.bidDetail!.bidType!.toLowerCase() == 'in_house') {
+        _auctionView.value.auctionDetail?.auctionType = 'onsite';
+      } else {
+        if (eventData.bidDetail!.userId != null &&
+            eventData.bidDetail!.userId != 0) {
+          if (_preferenceController.getInt(PrefsKeys.userId) ==
+              eventData.bidDetail!.userId) {
+            _auctionView.value.auctionDetail?.auctionType = 'your bid (online)';
+          } else {
+            _auctionView.value.auctionDetail?.auctionType =
+                eventData.bidDetail!.bidType ?? '';
+          }
+        } else {
+          _auctionView.value.auctionDetail?.auctionType =
+              eventData.bidDetail!.bidType ?? '';
+        }
+      }
+    }
 
     switch (eventData.event) {
       case 'READY_TO_BID':
