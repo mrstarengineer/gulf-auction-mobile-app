@@ -1,0 +1,20 @@
+**************** DEV ****************
+
+BASEURL_V1=https://gulfapi.arianashippingline.com/api/v1
+BASEURL=https://gulfapi.arianashippingline.com
+FONT_SITE=https://gulf-auction-dev-test.vercel.app
+PUSHER_KEY = '49fe077c5df413fd4c57'
+PUSHER_CLUSTER = 'ap2'
+PUSHER_CHANNEL_NAME ='private-ga-auctions'
+
+
+
+
+**************** LIVE ****************
+
+BASEURL_V1=https://api.gulfcarauction.com/api/v1
+BASEURL=https://api.gulfcarauction.com
+FONT_SITE=https://www.gulfcarauction.com
+PUSHER_KEY = '1aecaec485ef68578cd2'
+PUSHER_CLUSTER = 'ap2'
+PUSHER_CHANNEL_NAME ='private-ga-auctions'
