@@ -35,7 +35,6 @@ class KAuctionView {
             json['upcoming_vehicles'].toString() != '[]'
         ? KUpcomingVehicles.fromJson(json['upcoming_vehicles'])
         : null;
-    // totalRemainingItems = json['total_remaining_items'];
   }
 }
 
@@ -46,7 +45,6 @@ class KAuctionDetail {
   String? auctionAt;
   int? auctionAtInMilliseconds;
   int? timeLeftSec;
-  String? auctionType;
 
   KAuctionDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -55,19 +53,20 @@ class KAuctionDetail {
     auctionAt = json['auction_at'];
     auctionAtInMilliseconds = json['auction_at_in_milliseconds'];
     timeLeftSec = json['time_left_sec'];
-    auctionType = json['auction_type'];
   }
 }
 
 class MBidDetail {
   int? userId;
-  int? amount;
+  dynamic amount;
   String? username;
+  String? bidType;
 
   MBidDetail.fromJson(Map<String, dynamic> json) {
-    amount = json['amount'] ?? 0;
+    amount = json['amount'];
     userId = json['user_id'] ?? 0;
     username = json['username'] ?? '';
+    bidType = json['username'] ?? '';
   }
 }
 

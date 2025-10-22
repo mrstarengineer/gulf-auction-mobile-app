@@ -127,33 +127,24 @@ class AuctionBidLiveController extends GetxController {
 
           if (auctionView.bidDetail != null &&
               auctionView.bidDetail!.username != null) {
-            if (_preferenceController.getInt(PrefsKeys.userId) ==
-                auctionView.bidDetail!.userId) {
-              _auctionView.value.auctionDetail?.auctionType =
-                  'your bid (online)';
+            if (auctionView.bidDetail!.username?.toLowerCase() == 'on_site') {
+              _auctionView.value.bidDetail?.bidType = 'onsite';
             } else {
-              if (auctionView.bidDetail!.username?.toLowerCase() == 'on_site') {
-                _auctionView.value.auctionDetail?.auctionType = 'onsite';
-              } else {
-                _auctionView.value.auctionDetail?.auctionType = 'online';
-              }
-            }
-          } else {
-            if (auctionView.bidDetail != null &&
-                auctionView.bidDetail!.userId != null) {
-              if (_preferenceController.getInt(PrefsKeys.userId) ==
-                  auctionView.bidDetail!.userId) {
-                _auctionView.value.auctionDetail?.auctionType =
-                    'your bid (online)';
-              }
+              _auctionView.value.bidDetail?.bidType = 'online';
             }
           }
           if (auctionView.auctionDetail != null) {
             _reserveAmount.value =
                 auctionView.vehicleDetail?.reserveAmount ?? 0;
-            _storedBidAmount.value = auctionView.bidDetail?.amount ??
-                auctionView.vehicleDetail?.startBidAmount ??
-                0;
+
+            if (auctionView.bidDetail?.amount != null) {
+              _storedBidAmount.value =
+                  int.parse(auctionView.bidDetail?.amount?.toString() ?? '0');
+            } else {
+              _storedBidAmount.value =
+                  auctionView.vehicleDetail?.startBidAmount ?? 0;
+            }
+
             _currentUserId.value = auctionView.bidDetail?.userId ?? 0;
 
             if (auctionView.auctionDetail?.status == 7) {
@@ -395,21 +386,10 @@ class AuctionBidLiveController extends GetxController {
         eventData.bidDetail!.bidType != null &&
         eventData.bidDetail!.bidType!.isNotEmpty) {
       if (eventData.bidDetail!.bidType!.toLowerCase() == 'in_house') {
-        _auctionView.value.auctionDetail?.auctionType = 'onsite';
+        _auctionView.value.bidDetail?.bidType = 'onsite';
       } else {
-        if (eventData.bidDetail!.userId != null &&
-            eventData.bidDetail!.userId != 0) {
-          if (_preferenceController.getInt(PrefsKeys.userId) ==
-              eventData.bidDetail!.userId) {
-            _auctionView.value.auctionDetail?.auctionType = 'your bid (online)';
-          } else {
-            _auctionView.value.auctionDetail?.auctionType =
-                eventData.bidDetail!.bidType ?? '';
-          }
-        } else {
-          _auctionView.value.auctionDetail?.auctionType =
-              eventData.bidDetail!.bidType ?? '';
-        }
+        _auctionView.value.bidDetail?.bidType =
+            eventData.bidDetail!.bidType ?? '';
       }
     }
 

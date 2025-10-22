@@ -124,7 +124,7 @@ class _AuctionBidLivePageState extends State<AuctionBidLivePage> {
                     currentBidAmount:
                         _auctionBidLiveController.storedBidAmount.toString(),
                     nextBidAmount: _auctionBidLiveController.myBidAmount,
-                    auctionType: _auctionBidLiveController.auctionView.auctionDetail?.auctionType??'',
+                    auctionType: _auctionBidLiveController.auctionView.bidDetail?.bidType??'',
                     upcomingVehicles: _auctionBidLiveController.auctionView
                         .upcomingVehicles?.upcomingVehicleDetailList?.values,
                     bidBgColor: _auctionBidLiveController.mColor,
