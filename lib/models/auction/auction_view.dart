@@ -60,13 +60,11 @@ class MBidDetail {
   int? userId;
   dynamic amount;
   String? username;
-  String? bidType;
 
   MBidDetail.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     userId = json['user_id'] ?? 0;
     username = json['username'] ?? '';
-    bidType = json['username'] ?? '';
   }
 }
 

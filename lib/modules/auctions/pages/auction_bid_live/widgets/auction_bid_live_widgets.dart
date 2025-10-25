@@ -60,7 +60,7 @@ class AuctionBidLiveWidgets {
     Color? bidBgColor,
     String? auctionMessage,
     String? soldOutMessage,
-    required String auctionType,
+    required String bidType,
     String? participants,
     String? carName,
     String? vin,
@@ -135,7 +135,7 @@ class AuctionBidLiveWidgets {
                         auctionMessage: auctionMessage,
                         isAuctionStarted: isAuctionStarted,
                         soldOutMessage: soldOutMessage,
-                        auctionType: auctionType,
+                        bidType: bidType,
                         currentBidAmount: currentBidAmount,
                         nextBidAmount: nextBidAmount ?? 0,
                         onTapPlus: onTapBidIncrement,
@@ -321,7 +321,7 @@ Widget _bidButton(
     bool isBidBtnEnabled = true,
     bool isAuctionStarted = false,
     Color? bidBgColor,
-    required String auctionType,
+    required String bidType,
     String? auctionMessage,
     String? soldOutMessage,
     String? currentBidAmount,
@@ -343,8 +343,8 @@ Widget _bidButton(
             borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
         child: Column(
           children: [
-            if (auctionType.isNotEmpty)
-              AppTexts.mediumText(text: auctionType.toUpperCase()),
+            if (bidType.isNotEmpty)
+              AppTexts.mediumText(text: bidType.toUpperCase()),
             const SizedBox(
               height: 4,
             ),
@@ -376,8 +376,8 @@ Widget _bidButton(
             borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
         child: Column(
           children: [
-            if (auctionType.isNotEmpty)
-              AppTexts.mediumText(text: auctionType.toUpperCase()),
+            if (bidType.isNotEmpty)
+              AppTexts.mediumText(text: bidType.toUpperCase()),
             const SizedBox(
               height: 4,
             ),
@@ -409,8 +409,8 @@ Widget _bidButton(
             borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
         child: Column(
           children: [
-            if (auctionType.isNotEmpty)
-              AppTexts.mediumText(text: auctionType.toUpperCase()),
+            if (bidType.isNotEmpty)
+              AppTexts.mediumText(text: bidType.toUpperCase()),
             const SizedBox(
               height: 4,
             ),
@@ -444,8 +444,8 @@ Widget _bidButton(
         borderRadius: BorderRadius.circular(Dimensions.getHeight(6))),
     child: Column(
       children: [
-        if (auctionType.isNotEmpty)
-          AppTexts.mediumText(text: auctionType.toUpperCase()),
+        if (bidType.isNotEmpty)
+          AppTexts.mediumText(text: bidType.toUpperCase()),
         const SizedBox(
           height: 4,
         ),

@@ -33,6 +33,7 @@ class AuctionBidLiveController extends GetxController {
   final _isAuctionStarted = false.obs;
   final _auctionMessage = ''.obs;
   final _soldOutMessage = ''.obs;
+  final _bidType = ''.obs;
   final _mColor = AppColors.bidStartCLR.obs;
   final _mRadiusColor = AppColors.white.obs;
   var isBid = false;
@@ -58,6 +59,8 @@ class AuctionBidLiveController extends GetxController {
   bool get isAuctionStarted => _isAuctionStarted.value;
 
   String get auctionMessage => _auctionMessage.value;
+
+  String get bidType => _bidType.value;
 
   String get soldOutMessage => _soldOutMessage.value;
 
@@ -127,11 +130,16 @@ class AuctionBidLiveController extends GetxController {
 
           if (auctionView.bidDetail != null &&
               auctionView.bidDetail!.username != null) {
-            if (auctionView.bidDetail!.username?.toLowerCase() == 'on_site') {
-              _auctionView.value.bidDetail?.bidType = 'onsite';
+            if (auctionView.bidDetail!.username!.isEmpty) {
+              _bidType.value = '';
+            } else if (auctionView.bidDetail!.username?.toLowerCase() ==
+                'on_site') {
+              _bidType.value = 'onsite';
             } else {
-              _auctionView.value.bidDetail?.bidType = 'online';
+              _bidType.value = 'online';
             }
+          } else {
+            _bidType.value = '';
           }
           if (auctionView.auctionDetail != null) {
             _reserveAmount.value =
@@ -386,11 +394,12 @@ class AuctionBidLiveController extends GetxController {
         eventData.bidDetail!.bidType != null &&
         eventData.bidDetail!.bidType!.isNotEmpty) {
       if (eventData.bidDetail!.bidType!.toLowerCase() == 'in_house') {
-        _auctionView.value.bidDetail?.bidType = 'onsite';
+        _bidType.value = 'onsite';
       } else {
-        _auctionView.value.bidDetail?.bidType =
-            eventData.bidDetail!.bidType ?? '';
+        _bidType.value = eventData.bidDetail!.bidType ?? '';
       }
+    } else {
+      _bidType.value = '';
     }
 
     switch (eventData.event) {
@@ -448,12 +457,7 @@ class AuctionBidLiveController extends GetxController {
         break;
 
       default:
-        // For other events like BONUS_TIME, BID_ENDED, AUCTION_BREAK, etc.,
-        // we can handle specific logic here.
         break;
     }
-
-    // We now have a consistent, single source of truth for UI changes.
-    // Let's call `update()` for any `GetBuilder` or let `Obx` handle it.
   }
 }
